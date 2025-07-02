@@ -1,0 +1,2 @@
+device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp
+5,PC-Maria,Computador,yes,IDE+Compilação+Rede,300,55,922,87.0,78.9,2025-06-01 12:00:00

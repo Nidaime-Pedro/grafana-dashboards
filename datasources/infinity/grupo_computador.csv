@@ -1,0 +1,5 @@
+device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp
+4,PC-Joao,Computador,no,Navegador+Office+Rede,120,49,560,85.3,29.2,2025-06-01 09:00:00
+5,PC-Maria,Computador,yes,IDE+Compilação+Rede,300,55,922,87.0,78.9,2025-06-01 12:00:00
+11,PC-Seguranca,Computador,yes,Antivírus+Monitoramento+Logs,180,52,125,60.8,76.5,2025-06-02 06:00:00
+15,PC-Design,Computador,no,Photoshop+GPU+Net,260,54,505,68.7,49.1,2025-06-02 18:00:00

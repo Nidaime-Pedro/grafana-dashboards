@@ -1,0 +1,2 @@
+device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp,ativo
+2,SRV-DB-01,Servidor,no,MySQL+Disk+RAM,680,64,1000,83.3,31.7,2025-06-01 03:00:00,1

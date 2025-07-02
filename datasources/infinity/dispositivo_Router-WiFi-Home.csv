@@ -1,0 +1,2 @@
+device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp
+12,Router-WiFi-Home,Roteador,no,WiFi+NAT+Logs,320,49,192,64.2,73.4,2025-06-02 09:00:00

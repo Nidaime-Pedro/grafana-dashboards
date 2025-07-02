@@ -1,0 +1,2 @@
+device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp,ativo
+1,SRV-BKP-01,Servidor,yes,BKP+Disk+CPU,950,72,162,45.7,41.9,2025-06-01,1

@@ -1,0 +1,2 @@
+device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp,ativo
+3,SRV-APP-01,Servidor,yes,API+CPU+Memória,1024,85,958,38.8,54.8,2025-06-01 06:00:00,0

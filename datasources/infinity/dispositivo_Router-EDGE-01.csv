@@ -1,0 +1,2 @@
+device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp
+7,Router-EDGE-01,Roteador,no,NAT+DHCP+QoS,550,51,765,80.7,42.4,2025-06-01 18:00:00

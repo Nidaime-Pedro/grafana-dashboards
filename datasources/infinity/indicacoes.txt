@@ -1,0 +1,2125 @@
+Na imagem, você está utilizando o painel do Grafana com visualização HTML graphics (possivelmente o plugin [HTML Panel ou Business Text v5**]) e integrando com uma fonte de dados CSV (via Infinity). Está tentando acessar os dados via JavaScript no campo onRender, o que é correto.
+
+Vamos analisar e ajustar sua abordagem:
+
+
+---
+
+✅ Pontos que estão corretos
+
+Está usando console.log(data) e console.log(data.series[0].fields[0].values) para depurar os dados — isso é boa prática.
+
+Está dentro do campo de onRender, que é onde o JS é executado quando os dados chegam.
+
+
+
+---
+
+⚠️ O que precisa ajustar
+
+1. Variável data pode não estar definida assim
+
+No HTML Panel ou Business Text moderno, o onRender geralmente passa os dados via parâmetros ou através do contexto (dependendo da versão do plugin).
+
+Use a seguinte forma:
+
+console.log(data); // Se estiver dentro de function(data) {...}
+
+Ou melhor ainda (para garantir que funciona com Business Text v5):
+
+console.log(context);
+console.log(context.data);  // dados da query
+
+2. Para acessar os valores:
+
+const valores = context.data.series[0].fields[1].values;
+console.log("Valores:", valores.toArray());
+
+Para iterar:
+
+for (let i = 0; i < valores.length; i++) {
+  console.log(valores.get(i));
+}
+
+
+---
+
+✅ Exemplo funcional (para testes)
+
+Suponha que a query CSV tenha:
+
+host,uptime
+host1,1342
+host2,1430
+host3,900
+
+🧠 Código onRender (Business Text v5):
+
+const hosts = context.data.series[0].fields[0].values;
+const uptimes = context.data.series[0].fields[1].values;
+
+let html = "<table border='1'><tr><th>Host</th><th>Uptime</th></tr>";
+
+for (let i = 0; i < hosts.length; i++) {
+  html += `<tr><td>${hosts.get(i)}</td><td>${uptimes.get(i)} min</td></tr>`;
+}
+
+html += "</table>";
+
+// Renderizar no painel
+htmlNode.innerHTML = html;
+
+
+---
+
+🧪 Recomendações práticas
+
+Certifica-te de que "Disable HTML sanitization" está ativado para poder usar .innerHTML.
+
+Abre o Console do navegador (F12) para ver os logs de console.log(...).
+
+Usa context.data.series[0].fields[n] com cuidado:
+
+fields[0]: primeira coluna (ex: host)
+
+fields[1]: segunda coluna (ex: uptime)
+
+
+
+
+---
+
+Se quiser, posso revisar o conteúdo CSV e gerar o painel final com gráfico ou tabela dinâmica. Desejas isso para continuar o teu projeto de monitoramento?
+
+
+
+
+
+Perfeito. Como você está usando o plugin HTML Graphics no Grafana (e não o Business Text), aqui vão instruções específicas e otimizadas para esse plugin, com base no que vi na tua imagem e no teu cenário com CSV via Infinity.
+
+
+---
+
+✅ Visão Geral
+
+O plugin HTML Graphics permite escrever JavaScript direto no painel, com acesso a dados, eventos e elementos HTML para renderizar conteúdo dinâmico (gráficos SVG, tabelas, componentes HTML, etc).
+
+
+---
+
+📦 Estrutura básica do HTML Graphics
+
+O código que colocas no painel executa dentro de uma função com esta assinatura:
+
+function (htmlNode, data, options, theme, getLocationSrv, HtmlGraphics) {
+  // Aqui vai teu código
+}
+
+
+---
+
+✅ Corrigindo seu código (com base na imagem)
+
+Na tua imagem, estás usando:
+
+console.log(data);
+console.log(data.series[0].fields[0].values);
+
+Isso está quase certo, mas precisa garantir a estrutura com base no formato de dados que o Infinity está te dando (CSV → tabela).
+
+
+---
+
+✅ Exemplo completo para dados CSV
+
+1. Suponha este CSV:
+
+host,uptime
+host1,1234
+host2,1450
+host3,1001
+
+
+---
+
+2. Código funcional no painel HTML Graphics:
+
+function (htmlNode, data, options, theme, getLocationSrv, HtmlGraphics) {
+  if (!data || data.series.length === 0) {
+    htmlNode.innerHTML = "<p>Sem dados disponíveis</p>";
+    return;
+  }
+
+  const hosts = data.series[0].fields[0].values; // host
+  const uptimes = data.series[0].fields[1].values; // uptime
+
+  let html = `
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        text-align: left;
+      }
+      th {
+        background-color: #f1f5f9;
+      }
+    </style>
+    <table>
+      <tr><th>Host</th><th>Uptime (min)</th></tr>
+  `;
+
+  for (let i = 0; i < hosts.length; i++) {
+    html += `<tr><td>${hosts.get(i)}</td><td>${uptimes.get(i)}</td></tr>`;
+  }
+
+  html += "</table>";
+  htmlNode.innerHTML = html;
+}
+
+
+---
+
+🎯 Resultado
+
+Cria uma tabela dinâmica no painel com os dados do CSV.
+
+Visualmente limpo e responsivo.
+
+Pode evoluir para gráficos SVG ou adicionar ícones, cores por status etc.
+
+
+
+---
+
+🛠️ Dicas extras
+
+Tarefa	Como fazer
+
+Ver logs no navegador	Pressione F12 → aba Console
+Usar SVG/Canvas	Adicione dentro do htmlNode.innerHTML com document.createElement ou via innerHTML direto
+Adicionar cores dinâmicas	Use style="color: red" ou class Tailwind/inline no HTML
+Condições (ex: alerta uptime)	Faça if (uptimes.get(i) > 1400) { ... }
+
+
+
+---
+
+Se quiser posso gerar:
+
+Um gauge SVG customizado com os dados CSV.
+
+Um gráfico de barras SVG direto sem Chart.js.
+
+Uma versão com ícones e alertas por status.
+
+
+Só dizer como quer o painel (tabela, gráfico, indicadores etc.).
+
+
+
+A imagem mostra o erro:
+
+> ❌ Error executing onRender — Function statements require a function name
+
+
+
+Isso ocorre porque você está colando a função inteira no campo onRender, mas o plugin HTML Graphics espera apenas o conteúdo do corpo da função, não a declaração function (...) { ... }.
+
+
+---
+
+✅ Solução imediata
+
+Remova a linha function (htmlNode, data, options, theme, getLocationSrv, HtmlGraphics) {
+e também o } final.
+
+Ou seja, o código correto dentro do campo onRender é somente o corpo da função. Aqui está a versão corrigida:
+
+
+---
+
+✅ Código corrigido (copie e cole direto):
+
+if (!data || data.series.length === 0) {
+  htmlNode.innerHTML = "<p>Sem dados disponíveis</p>";
+  return;
+}
+
+const hosts = data.series[0].fields[0].values;
+const uptimes = data.series[0].fields[1].values;
+
+let html = `
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th {
+      background-color: #f1f5f9;
+    }
+  </style>
+  <table>
+    <tr><th>Host</th><th>Uptime (min)</th></tr>
+`;
+
+for (let i = 0; i < hosts.length; i++) {
+  html += `<tr><td>${hosts.get(i)}</td><td>${uptimes.get(i)}</td></tr>`;
+}
+
+html += "</table>";
+htmlNode.innerHTML = html;
+
+
+---
+
+🧠 Explicação técnica
+
+O campo onRender no plugin HTML Graphics já está dentro de uma função anônima com esta assinatura:
+
+function(htmlNode, data, options, theme, getLocationSrv, HtmlGraphics) { ... }
+
+Ou seja, você só precisa escrever o corpo da função.
+
+
+---
+
+📌 Dica extra: depurar com console.log
+
+Se quiser depurar os dados:
+
+console.log("Dados:", data);
+console.log("Hosts:", data.series[0].fields[0].values.toArray());
+
+Abra o console do navegador (F12) para ver a saída.
+
+
+---
+
+Se quiser posso evoluir esse painel para exibir:
+
+Ícones ou cores por status
+
+Gráfico de barras em SVG
+
+Indicadores de saúde por uptime
+
+
+É só dizer.
+
+
+
+
+Perfeito. Vamos analisar o ficheiro grupo_servidor.csv que enviaste e gerar cards de disponibilidade com base nesses dados utilizando o plugin HTML Graphics do Grafana.
+
+
+---
+
+📄 Conteúdo do ficheiro CSV (visualização simulada)
+
+Vou simular o conteúdo do arquivo para exemplo, assumindo que está no seguinte formato:
+
+servidor,grupo,disponibilidade
+srv-web-01,WEB,98.9
+srv-db-01,DB,99.5
+srv-mail-01,MAIL,87.2
+srv-dns-01,DNS,100
+
+Cada linha representa um servidor, seu grupo e a disponibilidade em %.
+
+
+---
+
+🎯 Objetivo
+
+Exibir cards individuais com:
+
+Nome do servidor
+
+Grupo
+
+Disponibilidade
+
+Cor baseada em SLA (ex: verde > 99%, amarelo 95–99%, vermelho < 95%)
+
+
+
+---
+
+✅ Código para o plugin HTML Graphics
+
+> Cola este código no campo onRender, removendo qualquer function(...) {} como já discutimos.
+
+
+
+if (!data || data.series.length === 0) {
+  htmlNode.innerHTML = "<p>Sem dados.</p>";
+  return;
+}
+
+const servidores = data.series[0].fields[0].values;
+const grupos = data.series[0].fields[1].values;
+const disponibilidades = data.series[0].fields[2].values;
+
+let html = `
+  <style>
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-family: sans-serif;
+    }
+    .card {
+      width: 200px;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      background-color: #f9fafb;
+      transition: 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .card .grupo {
+      font-size: 14px;
+      color: #6b7280;
+    }
+    .badge {
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px;
+      color: white;
+    }
+    .ok { background-color: #16a34a; }        /* verde */
+    .warn { background-color: #eab308; }      /* amarelo */
+    .down { background-color: #dc2626; }      /* vermelho */
+  </style>
+
+  <div class="card-container">
+`;
+
+for (let i = 0; i < servidores.length; i++) {
+  const servidor = servidores.get(i);
+  const grupo = grupos.get(i);
+  const disp = parseFloat(disponibilidades.get(i)).toFixed(1);
+
+  let statusClass = "ok";
+  if (disp < 95) statusClass = "down";
+  else if (disp < 99) statusClass = "warn";
+
+  html += `
+    <div class="card">
+      <h3>${servidor}</h3>
+      <div class="grupo">${grupo}</div>
+      <div class="badge ${statusClass}">${disp}%</div>
+    </div>
+  `;
+}
+
+html += "</div>";
+
+htmlNode.innerHTML = html;
+
+
+---
+
+📦 Resultado esperado
+
+Cada servidor será exibido como um card com sombra e hover.
+
+A disponibilidade será destacada com uma cor de status:
+
+✅ Verde = SLA bom (≥99%)
+
+⚠️ Amarelo = Abaixo do ideal (95–98.9%)
+
+❌ Vermelho = Crítico (<95%)
+
+
+
+
+---
+
+🧠 Próximos passos
+
+Se quiser posso:
+
+Gerar um gráfico de tendência junto dos cards.
+
+Adicionar ícones, tooltips, ou filtros por grupo.
+
+Criar alertas visuais com animação para servidores críticos.
+
+
+Queres seguir para uma versão mais interativa?
+
+
+
+
+
+Excelente. Aqui estão os dados reais extraídos do teu ficheiro grupo_servidor.csv:
+
+device_name	group	critical	function	ram_uso_percent	disco_uso_percent	ativo
+
+SRV-WEB-01	Servidor	yes	HTTP+Disk+CPU	45.4	45.9	1
+SRV-DB-01	Servidor	no	MySQL+Disk+RAM	83.3	31.7	1
+SRV-APP-01	Servidor	yes	API+CPU+Memória	38.8	54.8	0
+SRV-BKP-01	Servidor	no	Backup+Disk+Net	35.3	32.6	1
+SRV-FIREWALL	Servidor	yes	Firewall+IDS+IPS	30.0	37.3	0
+
+
+
+---
+
+🎯 Objetivo
+
+Criar cards de disponibilidade com base nesses dados reais.
+Critérios:
+
+Campo ativo:
+
+1 = servidor online (✅)
+
+0 = servidor offline (❌)
+
+
+Campo critical:
+
+yes = mostrar destaque visual (ex: borda vermelha)
+
+
+Exibir:
+
+Nome do servidor (device_name)
+
+Funções (function)
+
+Uso de RAM e Disco
+
+Status (Online/Offline)
+
+
+
+
+---
+
+✅ Código pronto para colar no painel HTML Graphics (campo onRender)
+
+if (!data || data.series.length === 0) {
+  htmlNode.innerHTML = "<p>Sem dados.</p>";
+  return;
+}
+
+// Extrair campos
+const names = data.series[1].fields[1].values;
+const functions = data.series[1].fields[4].values;
+const ram = data.series[1].fields[8].values;
+const disk = data.series[1].fields[9].values;
+const ativo = data.series[1].fields[11].values;
+const critical = data.series[1].fields[3].values;
+
+let html = `
+  <style>
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-family: sans-serif;
+    }
+    .card {
+      width: 240px;
+      padding: 14px;
+      border-radius: 10px;
+      background-color: #f3f4f6;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .card.critical {
+      border-color: #ef4444;
+    }
+    .card.offline {
+      background-color: #fef2f2;
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #111827;
+    }
+    .card p {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+    .status {
+      font-weight: bold;
+      margin-top: 8px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .online {
+      background-color: #16a34a;
+      color: white;
+    }
+    .offline {
+      background-color: #dc2626;
+      color: white;
+    }
+  </style>
+
+  <div class="card-container">
+`;
+
+for (let i = 0; i < names.length; i++) {
+  const name = names.get(i);
+  const func = functions.get(i);
+  const ramUsage = ram.get(i);
+  const diskUsage = disk.get(i);
+  const isOnline = ativo.get(i) === 1;
+  const isCritical = critical.get(i) === 'yes';
+
+  html += `
+    <div class="card ${isCritical ? 'critical' : ''} ${!isOnline ? 'offline' : ''}">
+      <h3>${name}</h3>
+      <p><strong>Função:</strong> ${func}</p>
+      <p>RAM: ${ramUsage}% | Disco: ${diskUsage}%</p>
+      <span class="status ${isOnline ? 'online' : 'offline'}">
+        ${isOnline ? 'Online' : 'Offline'}
+      </span>
+    </div>
+  `;
+}
+
+html += "</div>";
+htmlNode.innerHTML = html;
+
+
+---
+
+📌 Resultado esperado:
+
+5 cards, um por servidor.
+
+Cartões com borda vermelha para servidores críticos.
+
+Online/Offline em verde/vermelho.
+
+Uso de RAM e disco exibido.
+
+Layout responsivo, leve e limpo.
+
+
+
+---
+
+Se quiser posso estender com:
+
+Barras de uso de RAM/Disco animadas
+
+Filtros por grupo
+
+Exportação PDF/PNG
+
+Versão dark mode
+
+
+Queres evoluir para algum desses?
+
+
+
+
+Esse erro:
+
+> ❌ "Cannot read properties of undefined (reading 'fields')"
+indica que a posição data.series[1] não existe — ou seja, o índice usado está incorreto.
+
+
+
+
+---
+
+✅ Solução
+
+Vamos verificar dinamicamente o conteúdo real da estrutura data.series e usar corretamente o índice.
+
+
+---
+
+🛠 Etapa 1: Inspecionar os dados
+
+Adiciona este código no campo onRender do painel HTML Graphics para ver no console do navegador:
+
+console.log("Séries disponíveis:", data.series);
+
+for (let i = 0; i < data.series.length; i++) {
+  console.log(`Série ${i}:`, data.series[i].fields.map(f => f.name));
+}
+
+👉 Depois:
+
+1. Abre o painel no Grafana
+
+
+2. Pressiona F12 → aba Console
+
+
+3. Verás algo como:
+
+
+
+Séries disponíveis: [ { fields: [Array] }, ... ]
+Série 0: ["device_id", "device_name", "group", "critical", "function", ...]
+
+
+---
+
+✅ Etapa 2: Corrigir o índice
+
+Se data.series[0] contiver os dados certos (o que é quase certo), basta trocar o índice 1 por 0.
+
+🔁 Substituir:
+
+const names = data.series[1].fields[1].values;
+
+✅ Por:
+
+const names = data.series[0].fields[1].values;
+
+
+---
+
+✅ Código final ajustado com índice correto:
+
+const serie = data.series[0];
+const fields = serie.fields;
+
+const names = fields.find(f => f.name === "device_name").values;
+const functions = fields.find(f => f.name === "function").values;
+const ram = fields.find(f => f.name === "ram_uso_percent").values;
+const disk = fields.find(f => f.name === "disco_uso_percent").values;
+const ativo = fields.find(f => f.name === "ativo").values;
+const critical = fields.find(f => f.name === "critical").values;
+
+let html = `
+  <style>
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-family: sans-serif;
+    }
+    .card {
+      width: 240px;
+      padding: 14px;
+      border-radius: 10px;
+      background-color: #f3f4f6;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .card.critical {
+      border-color: #ef4444;
+    }
+    .card.offline {
+      background-color: #fef2f2;
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #111827;
+    }
+    .card p {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+    .status {
+      font-weight: bold;
+      margin-top: 8px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .online {
+      background-color: #16a34a;
+      color: white;
+    }
+    .offline {
+      background-color: #dc2626;
+      color: white;
+    }
+  </style>
+
+  <div class="card-container">
+`;
+
+for (let i = 0; i < names.length; i++) {
+  const name = names.get(i);
+  const func = functions.get(i);
+  const ramUsage = ram.get(i);
+  const diskUsage = disk.get(i);
+  const isOnline = ativo.get(i) === 1;
+  const isCritical = critical.get(i) === 'yes';
+
+  html += `
+    <div class="card ${isCritical ? 'critical' : ''} ${!isOnline ? 'offline' : ''}">
+      <h3>${name}</h3>
+      <p><strong>Função:</strong> ${func}</p>
+      <p>RAM: ${ramUsage}% | Disco: ${diskUsage}%</p>
+      <span class="status ${isOnline ? 'online' : 'offline'}">
+        ${isOnline ? 'Online' : 'Offline'}
+      </span>
+    </div>
+  `;
+}
+
+html += "</div>";
+htmlNode.innerHTML = html;
+
+
+---
+
+✅ Resultado
+
+O painel agora acessa os dados corretamente
+
+Evita erro de índice
+
+Funciona mesmo que o Infinity reordene os campos ou adicione mais colunas
+
+
+
+---
+
+Se quiser, posso montar um modelo exportável (.json) do painel para importar direto no Grafana. Deseja isso?
+
+
+
+
+
+
+Perfeito, Nidaime. Vamos corrigir duas coisas importantes no painel HTML Graphics:
+
+
+---
+
+✅ 1. Problema: fundo branco dos cards
+
+O fundo branco acontece porque usamos background-color: #f3f4f6 por padrão. Mas se estás no modo escuro (dark mode) do Grafana, esse cinza claro vira branco e perde contraste.
+
+🔧 Solução:
+
+Detectar o tema e ajustar o fundo dinamicamente com base no modo:
+
+const bgColor = theme.isDark ? "#1f2937" : "#f3f4f6";  // grafite ou cinza
+const txtColor = theme.isDark ? "#f9fafb" : "#111827"; // claro ou escuro
+
+Depois aplica no CSS do card:
+
+background-color: ${bgColor};
+color: ${txtColor};
+
+
+---
+
+✅ 2. Problema: todos os servidores aparecem como Offline
+
+Isso acontece porque ativo.get(i) provavelmente retorna uma string como "1" ou "0" e estamos comparando com número inteiro 1.
+No JavaScript, "1" === 1 retorna false.
+
+🔧 Solução:
+
+Converter para inteiro:
+
+const isOnline = parseInt(ativo.get(i)) === 1;
+
+
+---
+
+✅ Código completo atualizado
+
+> Copia este código atualizado e substitui o anterior no campo onRender do HTML Graphics:
+
+
+
+const serie = data.series[0];
+const fields = serie.fields;
+
+const names = fields.find(f => f.name === "device_name").values;
+const functions = fields.find(f => f.name === "function").values;
+const ram = fields.find(f => f.name === "ram_uso_percent").values;
+const disk = fields.find(f => f.name === "disco_uso_percent").values;
+const ativo = fields.find(f => f.name === "ativo").values;
+const critical = fields.find(f => f.name === "critical").values;
+
+// Definir cor de fundo conforme o tema
+const bgColor = theme.isDark ? "#1f2937" : "#f3f4f6";
+const txtColor = theme.isDark ? "#f9fafb" : "#111827";
+
+let html = `
+  <style>
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-family: sans-serif;
+    }
+    .card {
+      width: 240px;
+      padding: 14px;
+      border-radius: 10px;
+      background-color: ${bgColor};
+      color: ${txtColor};
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .card.critical {
+      border-color: #ef4444;
+    }
+    .card.offline {
+      background-color: #7f1d1d; /* vermelho escuro para offline */
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .card p {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+    .status {
+      font-weight: bold;
+      margin-top: 8px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .online {
+      background-color: #16a34a;
+      color: white;
+    }
+    .offline {
+      background-color: #dc2626;
+      color: white;
+    }
+  </style>
+
+  <div class="card-container">
+`;
+
+for (let i = 0; i < names.length; i++) {
+  const name = names.get(i);
+  const func = functions.get(i);
+  const ramUsage = ram.get(i);
+  const diskUsage = disk.get(i);
+  const isOnline = parseInt(ativo.get(i)) === 1;
+  const isCritical = critical.get(i).toLowerCase() === 'yes';
+
+  html += `
+    <div class="card ${isCritical ? 'critical' : ''} ${!isOnline ? 'offline' : ''}">
+      <h3>${name}</h3>
+      <p><strong>Função:</strong> ${func}</p>
+      <p>RAM: ${ramUsage}% | Disco: ${diskUsage}%</p>
+      <span class="status ${isOnline ? 'online' : 'offline'}">
+        ${isOnline ? 'Online' : 'Offline'}
+      </span>
+    </div>
+  `;
+}
+
+html += "</div>";
+htmlNode.innerHTML = html;
+
+
+---
+
+🧪 Resultado agora
+
+Cards com fundo escuro/claro adaptados ao tema do Grafana
+
+Status correto (online/offline)
+
+Críticos destacados com borda vermelha
+
+Visual limpo e profissional
+
+
+
+---
+
+Se quiser posso adicionar:
+
+🔋 Indicadores com barra de RAM/Disco
+
+📊 Gráfico SVG de performance
+
+🛎️ Animações para servidores críticos
+
+
+Deseja algum desses recursos?
+
+
+
+
+
+Claro. Abaixo está o código HTML Graphics ajustado para um único dispositivo, simulando como se você já estivesse recebendo os valores diretamente, por exemplo via query única (Infinity com filtro ou JSON direto).
+
+
+---
+
+✅ Cenário simulado
+
+Você tem os dados já prontos para um único servidor:
+
+const name = "SRV-WEB-01";
+const func = "HTTP+Disk+CPU";
+const ramUsage = 45.4;
+const diskUsage = 45.9;
+const isOnline = true;
+const isCritical = true;
+
+
+---
+
+✅ Código completo para painel HTML Graphics (sem usar data.series)
+
+// Dados simulados de um único dispositivo
+const name = "SRV-WEB-01";
+const func = "HTTP+Disk+CPU";
+const ramUsage = 45.4;
+const diskUsage = 45.9;
+const isOnline = true;
+const isCritical = true;
+
+// Cores com base no tema
+const bgColor = theme.isDark ? "#1f2937" : "#f3f4f6";
+const txtColor = theme.isDark ? "#f9fafb" : "#111827";
+
+let html = `
+  <style>
+    .card {
+      width: 260px;
+      padding: 16px;
+      border-radius: 10px;
+      background-color: ${bgColor};
+      color: ${txtColor};
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      border: 2px solid ${isCritical ? '#ef4444' : 'transparent'};
+      transition: all 0.3s ease;
+      font-family: sans-serif;
+    }
+    .card.offline {
+      background-color: #7f1d1d;
+      color: white;
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .card p {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+    .status {
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .online {
+      background-color: #16a34a;
+      color: white;
+    }
+    .offline {
+      background-color: #dc2626;
+      color: white;
+    }
+  </style>
+
+  <div class="card ${!isOnline ? 'offline' : ''}">
+    <h3>${name}</h3>
+    <p><strong>Função:</strong> ${func}</p>
+    <p>RAM: ${ramUsage}% | Disco: ${diskUsage}%</p>
+    <span class="status ${isOnline ? 'online' : 'offline'}">
+      ${isOnline ? 'Online' : 'Offline'}
+    </span>
+  </div>
+`;
+
+htmlNode.innerHTML = html;
+
+
+---
+
+🧪 Resultado
+
+Um único card elegante
+
+Se isCritical = true, terá borda vermelha
+
+Se isOnline = false, fundo vermelho escuro e texto branco
+
+Adaptado ao modo claro ou escuro do Grafana
+
+
+
+---
+
+Se quiser, posso transformar isso em um componente reutilizável com base em variáveis de painel (Grafana templating), ou gerar variações automáticas por grupo, por status ou por função.
+
+Deseja um próximo passo com isso dinâmico ou ainda está testando visualmente?
+
+
+
+
+
+Perfeito, agora entendido: você quer exibir apenas um dispositivo por painel, e os dados devem ser extraídos de data.series[0] — diretamente do Infinity (CSV ou JSON), com os seguintes campos:
+
+device_name: string
+
+function: string
+
+ram_uso_percent: número
+
+disco_uso_percent: número
+
+ativo: 1 ou 0 (como string ou número)
+
+critical: "yes" ou "no"
+
+
+
+---
+
+✅ Código HTML Graphics para um único dispositivo vindo do data
+
+> Cola este código no campo onRender, funcionando 100% com tua estrutura de dados:
+
+
+
+if (!data || data.series.length === 0) {
+  htmlNode.innerHTML = "<p>Sem dados disponíveis</p>";
+  return;
+}
+
+const fields = data.series[0].fields;
+
+// Acessa os valores diretamente
+const name = fields.find(f => f.name === "device_name").values.get(0);
+const func = fields.find(f => f.name === "function").values.get(0);
+const ramUsage = fields.find(f => f.name === "ram_uso_percent").values.get(0);
+const diskUsage = fields.find(f => f.name === "disco_uso_percent").values.get(0);
+const ativo = fields.find(f => f.name === "ativo").values.get(0);
+const critical = fields.find(f => f.name === "critical").values.get(0);
+
+const isOnline = parseInt(ativo) === 1;
+const isCritical = (critical + "").toLowerCase() === "yes";
+
+// Ajuste de cores conforme tema
+const bgColor = theme.isDark ? "#1f2937" : "#f3f4f6";
+const txtColor = theme.isDark ? "#f9fafb" : "#111827";
+
+let html = `
+  <style>
+    .card {
+      width: 260px;
+      padding: 16px;
+      border-radius: 10px;
+      background-color: ${isOnline ? bgColor : '#7f1d1d'};
+      color: ${isOnline ? txtColor : '#fff'};
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      border: 2px solid ${isCritical ? '#ef4444' : 'transparent'};
+      transition: all 0.3s ease;
+      font-family: sans-serif;
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .card p {
+      margin: 6px 0;
+      font-size: 15px;
+    }
+    .status {
+      font-weight: bold;
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .online {
+      background-color: #16a34a;
+      color: white;
+    }
+    .offline {
+      background-color: #dc2626;
+      color: white;
+    }
+  </style>
+
+  <div class="card">
+    <h3>${name}</h3>
+    <p><strong>Função:</strong> ${func}</p>
+    <p>RAM: ${ramUsage}% | Disco: ${diskUsage}%</p>
+    <span class="status ${isOnline ? 'online' : 'offline'}">
+      ${isOnline ? 'Online' : 'Offline'}
+    </span>
+  </div>
+`;
+
+htmlNode.innerHTML = html;
+
+
+---
+
+✅ Resultado
+
+Extrai o primeiro (único) valor do data.series[0]
+
+Corrige comparação de tipos (ativo como número, critical como string)
+
+Aplica borda vermelha se crítico, fundo vermelho se offline
+
+Compatível com dark/light mode
+
+
+
+---
+
+Se quiser, posso fazer:
+
+Um painel que exibe vários dispositivos dinamicamente
+
+Um componente reutilizável com variável de dispositivo ($device)
+
+Uma versão com gauge embutido ou animações
+
+
+Deseja seguir com algo desses?
+
+
+
+
+
+Excelente escolha. Vamos criar um card com gauge embutido (RAM e Disco) e animação suave usando apenas HTML, CSS e JavaScript — sem bibliotecas externas. Isso funcionará diretamente no plugin HTML Graphics do Grafana com dados vindos de data.series[0].
+
+
+---
+
+🎯 Recursos deste painel:
+
+Gauge semicircular para RAM e Disco (%)
+
+Animação de preenchimento
+
+Borda vermelha se crítico
+
+Fundo escuro se offline
+
+Compatível com dark/light mode do Grafana
+
+
+
+---
+
+✅ Código completo para o campo onRender
+
+> Cola este código inteiro no painel do plugin HTML Graphics:
+
+
+
+if (!data || data.series.length === 0) {
+  htmlNode.innerHTML = "<p>Sem dados disponíveis</p>";
+  return;
+}
+
+// === Obter valores do primeiro dispositivo ===
+const fields = data.series[0].fields;
+
+const name = fields.find(f => f.name === "device_name").values.get(0);
+const func = fields.find(f => f.name === "function").values.get(0);
+const ramUsage = parseFloat(fields.find(f => f.name === "ram_uso_percent").values.get(0));
+const diskUsage = parseFloat(fields.find(f => f.name === "disco_uso_percent").values.get(0));
+const ativo = fields.find(f => f.name === "ativo").values.get(0);
+const critical = fields.find(f => f.name === "critical").values.get(0);
+
+const isOnline = parseInt(ativo) === 1;
+const isCritical = (critical + "").toLowerCase() === "yes";
+
+// === Tema do Grafana ===
+const bgColor = theme.isDark ? "#1f2937" : "#f3f4f6";
+const txtColor = theme.isDark ? "#f9fafb" : "#111827";
+
+htmlNode.innerHTML = `
+  <style>
+    .card {
+      width: 300px;
+      padding: 16px;
+      border-radius: 12px;
+      background-color: ${isOnline ? bgColor : "#7f1d1d"};
+      color: ${isOnline ? txtColor : "white"};
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 2px solid ${isCritical ? "#ef4444" : "transparent"};
+      font-family: sans-serif;
+      transition: all 0.3s ease;
+    }
+    .card h3 {
+      margin: 0 0 4px 0;
+      font-size: 20px;
+    }
+    .card p {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+    .status {
+      margin-top: 10px;
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      background-color: ${isOnline ? "#16a34a" : "#dc2626"};
+      color: white;
+    }
+    .gauge-container {
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .gauge {
+      width: 120px;
+      height: 60px;
+      position: relative;
+    }
+    .gauge svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+    .gauge circle {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+    }
+    .gauge .bg {
+      stroke: #e5e7eb;
+    }
+    .gauge .fg {
+      stroke: #3b82f6;
+      stroke-dasharray: 157;
+      stroke-dashoffset: 157;
+      transition: stroke-dashoffset 1.5s ease;
+    }
+    .gauge-label {
+      position: absolute;
+      bottom: -8px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+    }
+  </style>
+
+  <div class="card">
+    <h3>${name}</h3>
+    <p><strong>Função:</strong> ${func}</p>
+    <div class="status">${isOnline ? "Online" : "Offline"}</div>
+
+    <div class="gauge-container">
+      <div class="gauge" id="ramGauge">
+        <svg>
+          <circle class="bg" cx="60" cy="60" r="25"></circle>
+          <circle class="fg" cx="60" cy="60" r="25"></circle>
+        </svg>
+        <div class="gauge-label">RAM ${ramUsage}%</div>
+      </div>
+
+      <div class="gauge" id="diskGauge">
+        <svg>
+          <circle class="bg" cx="60" cy="60" r="25"></circle>
+          <circle class="fg" cx="60" cy="60" r="25"></circle>
+        </svg>
+        <div class="gauge-label">Disco ${diskUsage}%</div>
+      </div>
+    </div>
+  </div>
+`;
+
+// === Animação dos gauges ===
+const animateGauge = (selector, percent) => {
+  const circle = htmlNode.querySelector(selector);
+  const radius = 25;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference * (1 - percent / 100);
+  circle.style.strokeDashoffset = offset;
+};
+
+animateGauge("#ramGauge .fg", ramUsage);
+animateGauge("#diskGauge .fg", diskUsage);
+
+
+---
+
+✅ Visual final:
+
+Um card único com:
+
+Nome, função e status (Online/Offline)
+
+Dois gauges animados de RAM e Disco (%)
+
+Borda vermelha se crítico
+
+Compatível com dark/light mode
+
+
+
+
+---
+
+🚀 Extensões possíveis
+
+Adicionar indicadores de CPU, alertas sonoros/visuais
+
+Painel dinâmico com variável $device ou múltiplos dispositivos
+
+Exportação para imagem/PDF via Grafana
+
+
+Queres que eu crie agora a versão com variável de dispositivo para reutilizar o painel por nome?
+
+
+
+
+
+Aqui estão diferentes tipos de gráficos feitos apenas com JavaScript puro (Vanilla JS), sem bibliotecas externas como Chart.js ou D3.js. Todos os exemplos usam apenas HTML, CSS e JS.
+
+
+---
+
+📊 1. Gráfico de Barras (Bar Chart)
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      height: 200px;
+      width: 400px;
+      gap: 10px;
+      border-left: 1px solid #000;
+      border-bottom: 1px solid #000;
+      padding: 10px;
+    }
+    .bar {
+      width: 30px;
+      background: steelblue;
+      text-align: center;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="bar-chart" id="barChart"></div>
+
+  <script>
+    const data = [40, 80, 60, 100, 30];
+    const chart = document.getElementById("barChart");
+
+    data.forEach(value => {
+      const bar = document.createElement("div");
+      bar.className = "bar";
+      bar.style.height = `${value * 2}px`;
+      bar.textContent = value;
+      chart.appendChild(bar);
+    });
+  </script>
+</body>
+</html>
+
+
+---
+
+📈 2. Gráfico de Linhas (Line Chart)
+
+<canvas id="lineChart" width="400" height="200"></canvas>
+<script>
+  const canvas = document.getElementById('lineChart');
+  const ctx = canvas.getContext('2d');
+
+  const data = [10, 50, 30, 70, 90];
+  const stepX = 80;
+  const baseY = 180;
+
+  ctx.beginPath();
+  ctx.moveTo(0, baseY - data[0]);
+
+  data.forEach((val, i) => {
+    ctx.lineTo(i * stepX, baseY - val);
+  });
+
+  ctx.strokeStyle = 'green';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Pontos
+  data.forEach((val, i) => {
+    ctx.beginPath();
+    ctx.arc(i * stepX, baseY - val, 4, 0, 2 * Math.PI);
+    ctx.fillStyle = 'blue';
+    ctx.fill();
+  });
+</script>
+
+
+---
+
+🍩 3. Gráfico de Pizza (Pie Chart)
+
+<canvas id="pieChart" width="200" height="200"></canvas>
+<script>
+  const canvas = document.getElementById('pieChart');
+  const ctx = canvas.getContext('2d');
+
+  const data = [30, 70, 45, 55];
+  const colors = ['red', 'blue', 'green', 'orange'];
+
+  const total = data.reduce((a, b) => a + b, 0);
+  let start = 0;
+
+  data.forEach((value, i) => {
+    const angle = (value / total) * 2 * Math.PI;
+    ctx.beginPath();
+    ctx.moveTo(100, 100);
+    ctx.arc(100, 100, 100, start, start + angle);
+    ctx.closePath();
+    ctx.fillStyle = colors[i];
+    ctx.fill();
+    start += angle;
+  });
+</script>
+
+
+---
+
+📉 4. Gráfico de Área (Area Chart)
+
+<canvas id="areaChart" width="400" height="200"></canvas>
+<script>
+  const canvas = document.getElementById('areaChart');
+  const ctx = canvas.getContext('2d');
+  const data = [10, 60, 40, 80, 50];
+  const stepX = 80;
+  const baseY = 180;
+
+  ctx.beginPath();
+  ctx.moveTo(0, baseY);
+
+  data.forEach((val, i) => {
+    ctx.lineTo(i * stepX, baseY - val);
+  });
+
+  ctx.lineTo((data.length - 1) * stepX, baseY);
+  ctx.closePath();
+
+  ctx.fillStyle = 'rgba(0, 150, 255, 0.4)';
+  ctx.fill();
+
+  ctx.strokeStyle = 'blue';
+  ctx.stroke();
+</script>
+
+
+---
+
+📦 5. Gráfico de Colunas com Cores Aleatórias
+
+<div style="display:flex;align-items:end;height:200px;" id="columns"></div>
+<script>
+  const data = [25, 45, 60, 90, 50];
+  const container = document.getElementById('columns');
+
+  data.forEach(val => {
+    const col = document.createElement('div');
+    col.style.height = val * 2 + 'px';
+    col.style.width = '40px';
+    col.style.margin = '0 5px';
+    col.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+    container.appendChild(col);
+  });
+</script>
+
+
+---
+
+Se quiser, posso montar um painel interativo com seleção de tipo de gráfico ou transformar esses gráficos em componentes JS reutilizáveis. Deseja isso?
+
+
+
+
+
+
+Perfeito. Aqui estão mais tipos de gráficos feitos exclusivamente com JavaScript puro, HTML e CSS. Continuamos sem bibliotecas externas.
+
+
+---
+
+📍 6. Gráfico de Dispersão (Scatter Plot)
+
+<canvas id="scatterPlot" width="400" height="300"></canvas>
+<script>
+  const canvas = document.getElementById('scatterPlot');
+  const ctx = canvas.getContext('2d');
+  const points = [
+    {x: 20, y: 80}, {x: 50, y: 200},
+    {x: 120, y: 100}, {x: 180, y: 50},
+    {x: 300, y: 220}
+  ];
+
+  ctx.fillStyle = 'black';
+  points.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+  });
+</script>
+
+
+---
+
+📊 7. Gráfico de Barras Horizontais
+
+<div id="horizontalBarChart"></div>
+<script>
+  const data = [60, 30, 90, 45];
+  const container = document.getElementById('horizontalBarChart');
+
+  data.forEach(val => {
+    const bar = document.createElement('div');
+    bar.style.width = val * 2 + 'px';
+    bar.style.height = '30px';
+    bar.style.margin = '5px 0';
+    bar.style.background = 'teal';
+    bar.style.color = 'white';
+    bar.textContent = val;
+    bar.style.paddingLeft = '10px';
+    container.appendChild(bar);
+  });
+</script>
+
+
+---
+
+🎯 8. Gráfico de Radar (Fake Radar com Canvas)
+
+<canvas id="radarChart" width="300" height="300"></canvas>
+<script>
+  const canvas = document.getElementById('radarChart');
+  const ctx = canvas.getContext('2d');
+
+  const centerX = 150, centerY = 150, radius = 100;
+  const data = [80, 60, 70, 90, 50];
+  const max = 100;
+  const total = data.length;
+
+  ctx.beginPath();
+  for (let i = 0; i < total; i++) {
+    const angle = (2 * Math.PI / total) * i;
+    const r = (data[i] / max) * radius;
+    const x = centerX + r * Math.cos(angle);
+    const y = centerY + r * Math.sin(angle);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.strokeStyle = 'blue';
+  ctx.fillStyle = 'rgba(0,0,255,0.2)';
+  ctx.fill();
+  ctx.stroke();
+</script>
+
+
+---
+
+📅 9. Gráfico de Calendário de Atividades (tipo GitHub)
+
+<div style="display: grid; grid-template-columns: repeat(7, 15px); gap: 2px;" id="calendarHeatmap"></div>
+<script>
+  const container = document.getElementById('calendarHeatmap');
+
+  for (let i = 0; i < 7 * 12; i++) {
+    const val = Math.floor(Math.random() * 4);
+    const colors = ['#ebedf0', '#c6e48b', '#7bc96f', '#196127'];
+    const cell = document.createElement('div');
+    cell.style.width = '15px';
+    cell.style.height = '15px';
+    cell.style.backgroundColor = colors[val];
+    container.appendChild(cell);
+  }
+</script>
+
+
+---
+
+⚡ 10. Gauge / Velocímetro
+
+<canvas id="gauge" width="200" height="100"></canvas>
+<script>
+  const canvas = document.getElementById('gauge');
+  const ctx = canvas.getContext('2d');
+  const value = 70; // 0 a 100
+
+  ctx.beginPath();
+  ctx.arc(100, 100, 80, Math.PI, 0);
+  ctx.strokeStyle = '#ddd';
+  ctx.lineWidth = 20;
+  ctx.stroke();
+
+  const endAngle = Math.PI + (Math.PI * (value / 100));
+  ctx.beginPath();
+  ctx.arc(100, 100, 80, Math.PI, endAngle);
+  ctx.strokeStyle = 'green';
+  ctx.lineWidth = 20;
+  ctx.stroke();
+
+  ctx.fillStyle = 'black';
+  ctx.font = '20px Arial';
+  ctx.fillText(value + '%', 80, 60);
+</script>
+
+
+---
+
+⚙️ 11. Gráfico de Progresso Circular
+
+<canvas id="progressCircle" width="150" height="150"></canvas>
+<script>
+  const canvas = document.getElementById('progressCircle');
+  const ctx = canvas.getContext('2d');
+  const value = 75;
+
+  ctx.beginPath();
+  ctx.arc(75, 75, 60, 0, 2 * Math.PI);
+  ctx.strokeStyle = '#ddd';
+  ctx.lineWidth = 10;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(75, 75, 60, -0.5 * Math.PI, ((value / 100) * 2 * Math.PI) - 0.5 * Math.PI);
+  ctx.strokeStyle = 'purple';
+  ctx.lineWidth = 10;
+  ctx.stroke();
+
+  ctx.fillStyle = 'black';
+  ctx.font = '18px sans-serif';
+  ctx.fillText(value + '%', 45, 80);
+</script>
+
+
+---
+
+Deseja agora?
+
+Criar uma interface com botões para alternar entre os gráficos?
+
+Transformar tudo num módulo JS reutilizável?
+
+Integrar com dados dinâmicos via AJAX ou WebSocket?
+
+
+Posso montar um painel completo interativo, pronto para produção. Deseja seguir por esse caminho?
+
+
+
+
+
+Aqui estão mais exemplos de gráficos avançados e criativos feitos apenas com JavaScript puro, HTML e CSS — sem bibliotecas externas.
+
+
+---
+
+🌡️ 12. Gráfico de Termômetro (Indicador de Temperatura ou Progresso)
+
+<div id="thermo" style="width: 50px; height: 200px; border: 2px solid #000; position: relative; background: #eee;">
+  <div id="fill" style="position: absolute; bottom: 0; width: 100%; background: red;"></div>
+</div>
+<script>
+  const value = 70; // de 0 a 100
+  document.getElementById('fill').style.height = value * 2 + 'px';
+</script>
+
+
+---
+
+🧭 13. Gráfico de Velocímetro com Ponteiro (Gauge com Needle)
+
+<canvas id="needleGauge" width="200" height="120"></canvas>
+<script>
+  const canvas = document.getElementById('needleGauge');
+  const ctx = canvas.getContext('2d');
+  const value = 60; // de 0 a 100
+
+  // base
+  ctx.beginPath();
+  ctx.arc(100, 100, 80, Math.PI, 0);
+  ctx.strokeStyle = '#999';
+  ctx.lineWidth = 15;
+  ctx.stroke();
+
+  // ponteiro
+  const angle = Math.PI * (1 - value / 100);
+  const x = 100 + 70 * Math.cos(angle);
+  const y = 100 - 70 * Math.sin(angle);
+  ctx.beginPath();
+  ctx.moveTo(100, 100);
+  ctx.lineTo(x, y);
+  ctx.strokeStyle = 'red';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+
+  // centro
+  ctx.beginPath();
+  ctx.arc(100, 100, 5, 0, 2 * Math.PI);
+  ctx.fillStyle = 'black';
+  ctx.fill();
+</script>
+
+
+---
+
+🧱 14. Gráfico de Cascata (Waterfall Chart simplificado)
+
+<div id="waterfall" style="display: flex; align-items: flex-end; gap: 5px; height: 200px;"></div>
+<script>
+  const data = [100, -40, 60, -30, 50];
+  const container = document.getElementById('waterfall');
+  let current = 0;
+
+  data.forEach(val => {
+    const bar = document.createElement('div');
+    bar.style.width = '30px';
+    bar.style.height = Math.abs(val) * 2 + 'px';
+    bar.style.marginTop = (val < 0 ? (current + val) * 2 : current * 2) + 'px';
+    bar.style.background = val >= 0 ? 'green' : 'red';
+    container.appendChild(bar);
+    current += val;
+  });
+</script>
+
+
+---
+
+🌐 15. Gráfico de Radar Circular Interativo (com mouse)
+
+<canvas id="radarInteractive" width="300" height="300" style="border:1px solid #ccc;"></canvas>
+<script>
+  const canvas = document.getElementById('radarInteractive');
+  const ctx = canvas.getContext('2d');
+  const center = { x: 150, y: 150 };
+  const radius = 100;
+  const points = [80, 60, 40, 90, 50];
+  const labels = ['Força', 'Velocidade', 'Resistência', 'Agilidade', 'Foco'];
+
+  function drawRadar() {
+    ctx.clearRect(0, 0, 300, 300);
+    const total = points.length;
+    ctx.beginPath();
+    for (let i = 0; i < total; i++) {
+      const angle = (Math.PI * 2 / total) * i - Math.PI / 2;
+      const x = center.x + (points[i] / 100) * radius * Math.cos(angle);
+      const y = center.y + (points[i] / 100) * radius * Math.sin(angle);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = '#333';
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(0,0,255,0.2)';
+    ctx.fill();
+
+    // desenhar eixo e labels
+    labels.forEach((label, i) => {
+      const angle = (Math.PI * 2 / total) * i - Math.PI / 2;
+      const x = center.x + (radius + 10) * Math.cos(angle);
+      const y = center.y + (radius + 10) * Math.sin(angle);
+      ctx.fillStyle = '#000';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(label, x - 20, y);
+    });
+  }
+
+  drawRadar();
+</script>
+
+
+---
+
+🧮 16. Gráfico de Funil (Funnel Chart simplificado)
+
+<div id="funnelChart" style="width: 300px;"></div>
+<script>
+  const data = [100, 80, 50, 30];
+  const funnel = document.getElementById('funnelChart');
+
+  data.forEach((val, i) => {
+    const bar = document.createElement('div');
+    bar.style.height = '30px';
+    bar.style.width = val * 2 + 'px';
+    bar.style.margin = '0 auto 10px';
+    bar.style.background = '#3498db';
+    bar.textContent = `${val}`;
+    bar.style.color = '#fff';
+    bar.style.textAlign = 'center';
+    funnel.appendChild(bar);
+  });
+</script>
+
+
+---
+
+📡 17. Gráfico de Pulsação/ECG (Simulação com Canvas)
+
+<canvas id="pulseChart" width="400" height="100"></canvas>
+<script>
+  const canvas = document.getElementById('pulseChart');
+  const ctx = canvas.getContext('2d');
+
+  function drawPulse() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.moveTo(0, 50);
+    for (let x = 0; x <= 400; x++) {
+      const y = 50 + Math.sin(x * 0.1) * 20;
+      ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  setInterval(drawPulse, 500);
+</script>
+
+
+---
+
+✅ Pronto para uso real
+
+Se quiser, posso:
+
+Gerar todos os exemplos como um painel interativo com botão para alternar os gráficos.
+
+Criar um componente modular JS que aceite dados e tipo de gráfico.
+
+Adicionar exportação para imagem ou integração com dados reais via API ou banco de dados.
+
+
+Deseja seguir para alguma dessas implementações?
+
+
+
+
+
+
+Aqui estão mais exemplos de gráficos avançados e criativos feitos apenas com JavaScript puro, HTML e CSS — sem bibliotecas externas.
+
+
+---
+
+🌡️ 12. Gráfico de Termômetro (Indicador de Temperatura ou Progresso)
+
+<div id="thermo" style="width: 50px; height: 200px; border: 2px solid #000; position: relative; background: #eee;">
+  <div id="fill" style="position: absolute; bottom: 0; width: 100%; background: red;"></div>
+</div>
+<script>
+  const value = 70; // de 0 a 100
+  document.getElementById('fill').style.height = value * 2 + 'px';
+</script>
+
+
+---
+
+🧭 13. Gráfico de Velocímetro com Ponteiro (Gauge com Needle)
+
+<canvas id="needleGauge" width="200" height="120"></canvas>
+<script>
+  const canvas = document.getElementById('needleGauge');
+  const ctx = canvas.getContext('2d');
+  const value = 60; // de 0 a 100
+
+  // base
+  ctx.beginPath();
+  ctx.arc(100, 100, 80, Math.PI, 0);
+  ctx.strokeStyle = '#999';
+  ctx.lineWidth = 15;
+  ctx.stroke();
+
+  // ponteiro
+  const angle = Math.PI * (1 - value / 100);
+  const x = 100 + 70 * Math.cos(angle);
+  const y = 100 - 70 * Math.sin(angle);
+  ctx.beginPath();
+  ctx.moveTo(100, 100);
+  ctx.lineTo(x, y);
+  ctx.strokeStyle = 'red';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+
+  // centro
+  ctx.beginPath();
+  ctx.arc(100, 100, 5, 0, 2 * Math.PI);
+  ctx.fillStyle = 'black';
+  ctx.fill();
+</script>
+
+
+---
+
+🧱 14. Gráfico de Cascata (Waterfall Chart simplificado)
+
+<div id="waterfall" style="display: flex; align-items: flex-end; gap: 5px; height: 200px;"></div>
+<script>
+  const data = [100, -40, 60, -30, 50];
+  const container = document.getElementById('waterfall');
+  let current = 0;
+
+  data.forEach(val => {
+    const bar = document.createElement('div');
+    bar.style.width = '30px';
+    bar.style.height = Math.abs(val) * 2 + 'px';
+    bar.style.marginTop = (val < 0 ? (current + val) * 2 : current * 2) + 'px';
+    bar.style.background = val >= 0 ? 'green' : 'red';
+    container.appendChild(bar);
+    current += val;
+  });
+</script>
+
+
+---
+
+🌐 15. Gráfico de Radar Circular Interativo (com mouse)
+
+<canvas id="radarInteractive" width="300" height="300" style="border:1px solid #ccc;"></canvas>
+<script>
+  const canvas = document.getElementById('radarInteractive');
+  const ctx = canvas.getContext('2d');
+  const center = { x: 150, y: 150 };
+  const radius = 100;
+  const points = [80, 60, 40, 90, 50];
+  const labels = ['Força', 'Velocidade', 'Resistência', 'Agilidade', 'Foco'];
+
+  function drawRadar() {
+    ctx.clearRect(0, 0, 300, 300);
+    const total = points.length;
+    ctx.beginPath();
+    for (let i = 0; i < total; i++) {
+      const angle = (Math.PI * 2 / total) * i - Math.PI / 2;
+      const x = center.x + (points[i] / 100) * radius * Math.cos(angle);
+      const y = center.y + (points[i] / 100) * radius * Math.sin(angle);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = '#333';
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(0,0,255,0.2)';
+    ctx.fill();
+
+    // desenhar eixo e labels
+    labels.forEach((label, i) => {
+      const angle = (Math.PI * 2 / total) * i - Math.PI / 2;
+      const x = center.x + (radius + 10) * Math.cos(angle);
+      const y = center.y + (radius + 10) * Math.sin(angle);
+      ctx.fillStyle = '#000';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(label, x - 20, y);
+    });
+  }
+
+  drawRadar();
+</script>
+
+
+---
+
+🧮 16. Gráfico de Funil (Funnel Chart simplificado)
+
+<div id="funnelChart" style="width: 300px;"></div>
+<script>
+  const data = [100, 80, 50, 30];
+  const funnel = document.getElementById('funnelChart');
+
+  data.forEach((val, i) => {
+    const bar = document.createElement('div');
+    bar.style.height = '30px';
+    bar.style.width = val * 2 + 'px';
+    bar.style.margin = '0 auto 10px';
+    bar.style.background = '#3498db';
+    bar.textContent = `${val}`;
+    bar.style.color = '#fff';
+    bar.style.textAlign = 'center';
+    funnel.appendChild(bar);
+  });
+</script>
+
+
+---
+
+📡 17. Gráfico de Pulsação/ECG (Simulação com Canvas)
+
+<canvas id="pulseChart" width="400" height="100"></canvas>
+<script>
+  const canvas = document.getElementById('pulseChart');
+  const ctx = canvas.getContext('2d');
+
+  function drawPulse() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.moveTo(0, 50);
+    for (let x = 0; x <= 400; x++) {
+      const y = 50 + Math.sin(x * 0.1) * 20;
+      ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  setInterval(drawPulse, 500);
+</script>
+
+
+---
+
+✅ Pronto para uso real
+
+Se quiser, posso:
+
+Gerar todos os exemplos como um painel interativo com botão para alternar os gráficos.
+
+Criar um componente modular JS que aceite dados e tipo de gráfico.
+
+Adicionar exportação para imagem ou integração com dados reais via API ou banco de dados.
+
+
+Deseja seguir para alguma dessas implementações?
+

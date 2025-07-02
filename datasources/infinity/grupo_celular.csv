@@ -1,0 +1,4 @@
+device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp
+8,Phone-Android-01,Celular,no,App+Camera+Sensor,90,40,627,35.8,43.1,2025-06-01 21:00:00
+9,Phone-iOS-01,Celular,no,App+Bluetooth+GPS,85,41,981,67.9,67.9,2025-06-02 00:00:00
+13,Phone-Android-02,Celular,yes,VPN+App+Sync,100,45,384,68.5,28.3,2025-06-02 12:00:00

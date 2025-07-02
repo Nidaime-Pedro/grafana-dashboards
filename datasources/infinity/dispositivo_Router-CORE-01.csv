@@ -1,0 +1,2 @@
+device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp
+6,Router-CORE-01,Roteador,yes,Routing+BGP+Firewall,700,58,585,82.6,70.9,2025-06-01 15:00:00

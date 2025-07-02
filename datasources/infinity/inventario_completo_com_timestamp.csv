@@ -1,0 +1,16 @@
+device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp
+1,SRV-WEB-01,Servidor,yes,HTTP+Disk+CPU,950,72,162,45.4,45.9,2025-06-01 00:00:00
+2,SRV-DB-01,Servidor,no,MySQL+Disk+RAM,680,64,1000,83.3,31.7,2025-06-01 03:00:00
+3,SRV-APP-01,Servidor,yes,API+CPU+Memória,1024,85,958,38.8,54.8,2025-06-01 06:00:00
+4,PC-Joao,Computador,no,Navegador+Office+Rede,120,49,560,85.3,29.2,2025-06-01 09:00:00
+5,PC-Maria,Computador,yes,IDE+Compilação+Rede,300,55,922,87.0,78.9,2025-06-01 12:00:00
+6,Router-CORE-01,Roteador,yes,Routing+BGP+Firewall,700,58,585,82.6,70.9,2025-06-01 15:00:00
+7,Router-EDGE-01,Roteador,no,NAT+DHCP+QoS,550,51,765,80.7,42.4,2025-06-01 18:00:00
+8,Phone-Android-01,Celular,no,App+Camera+Sensor,90,40,627,35.8,43.1,2025-06-01 21:00:00
+9,Phone-iOS-01,Celular,no,App+Bluetooth+GPS,85,41,981,67.9,67.9,2025-06-02 00:00:00
+10,SRV-BKP-01,Servidor,no,Backup+Disk+Net,220,60,966,35.3,32.6,2025-06-02 03:00:00
+11,PC-Seguranca,Computador,yes,Antivírus+Monitoramento+Logs,180,52,125,60.8,76.5,2025-06-02 06:00:00
+12,Router-WiFi-Home,Roteador,no,WiFi+NAT+Logs,320,49,192,64.2,73.4,2025-06-02 09:00:00
+13,Phone-Android-02,Celular,yes,VPN+App+Sync,100,45,384,68.5,28.3,2025-06-02 12:00:00
+14,SRV-FIREWALL,Servidor,yes,Firewall+IDS+IPS,880,78,897,30.0,37.3,2025-06-02 15:00:00
+15,PC-Design,Computador,no,Photoshop+GPU+Net,260,54,505,68.7,49.1,2025-06-02 18:00:00
