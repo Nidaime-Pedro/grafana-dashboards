@@ -1,0 +1,439 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Décimo terceiro modelo de testes",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 45,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 11,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "* {\n  font-family: Open Sans;\n}\n\n.box {\n  border: solid #555 2px;\n  border-radius: 10px;\n  padding: 10px 20px;\n}\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "let html = `\n  <style>\n    body {\n      background-color: #0d1117;\n      color: white;\n      font-family: 'Segoe UI', sans-serif;\n    }\n\n    .card-container {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 16px;\n      padding: 20px;\n    }\n\n    .card {\n      width: 540px;\n      padding: 20px;\n      border-radius: 12px;\n      background-color: #161b22;\n      box-shadow: 0 0 10px rgba(0,0,0,0.4);\n      transition: all 0.3s ease;\n      border-left: 5px solid #58a6ff;\n    }\n\n    .card h1 {\n      margin: 0 0 10px;\n      font-size: 30px;\n      color: #f2f2f2;\n    }\n\n    .card p {\n      margin: 0;\n      font-size: 16px;\n      color: #c9d1d9;\n    }\n  </style>\n\n  <div class=\"card-container\">\n    <div class=\"card\">\n      <h1>Monitoramento 📊</h1>\n      <p>Dashboard estratégico de monitoramento de servidores e disponibilidade.</p>\n    </div>\n  </div>\n`;\n\nhtmlNode.innerHTML = html;\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "#:r2b6:{\r\n  border: 1px white solid;\r\n}",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "deonfk7bniby8b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 14,
+        "y": 0
+      },
+      "id": 7,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "if (!data || data.series.length === 0) {\n  htmlNode.innerHTML = \"<p style='color:white;'>Sem dados.</p>\";\n  return;\n}\n\nlet ativos = 0;\nlet inativos = 0;\nconst ativo = data.series[0].fields[0].values;\n\nfor (let i = 0; i < ativo.length; i++) {\n  if (ativo[i] == 1) {\n    ativos++;\n  } else if (ativo[i] == 0) {\n    inativos++;\n  }\n}\n\nlet html = `\n  <style>\n    body {\n      background-color: #0d1117;\n      font-family: 'Segoe UI', sans-serif;\n      color: white;\n    }\n\n    .card-container {\n      display: flex;\n      gap: 20px;\n      padding: 10px;\n    }\n\n    .card {\n      background-color: #161b22;\n      padding: 20px;\n      border-radius: 12px;\n      box-shadow: 0 0 8px rgba(0,0,0,0.3);\n      text-align: center;\n      width: 260px;\n    }\n\n    .card h3 {\n      margin-bottom: 8px;\n      font-size: 18px;\n      color: #58a6ff;\n    }\n\n    .ativos {\n      font-size: 32px;\n      font-weight: bold;\n      color: #2ea043;\n    }\n\n    .inativos {\n      font-size: 32px;\n      font-weight: bold;\n      color: #f85149;\n    }\n\n    .total {\n      margin-top: 10px;\n      font-size: 14px;\n      opacity: 0.7;\n    }\n  </style>\n\n  <div class=\"card-container\">\n    <div class=\"card\">\n      <h3>ATIVOS</h3>\n      <div class=\"ativos\">${ativos}</div>\n      <div class=\"total\">de ${ativo.length} dispositivos</div>\n    </div>\n\n    <div class=\"card\">\n      <h3>INATIVOS</h3>\n      <div class=\"inativos\">${inativos}</div>\n      <div class=\"total\">de ${ativo.length} dispositivos</div>\n    </div>\n  </div>\n`;\n\nhtmlNode.innerHTML = html;\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "columns": [],
+          "data": "device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp\n1,SRV-WEB-01,Servidor,yes,HTTP+Disk+CPU,950,72,162,45.4,45.9,2025-06-01\n",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "deonfk7bniby8b"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "csv",
+          "url": "http://localhost:8000/grupo_servidor.csv",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "deonfk7bniby8b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 20,
+        "w": 9,
+        "x": 1,
+        "y": 5
+      },
+      "id": 17,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "if (!data || data.series.length === 0) {\n  htmlNode.innerHTML = \"<p style='color:white;'>Sem dados.</p>\";\n  return;\n}\n\n// Extrair campos\nconst func = data.series[0].fields[5].values;\nconst ramUsage = data.series[0].fields[8].values;\nconst diskUsage = data.series[0].fields[4].values;\nconst temperatura = data.series[0].fields[9].values;\nconst critical = data.series[0].fields[1].values;\nconst nomes = data.series[0].fields[3].values;\nconst data_corrente = data.series[0].fields[11].values;\nconst ativo = data.series[0].fields[0].values;\nconst id = data.series[0].fields[2].values;\n\nlet html = `\n  <style>\n    body {\n      background-color: #0d1117;\n      color: white;\n      font-family: 'Segoe UI', sans-serif;\n    }\n\n    .card-container {\n      display: flex;\n      flex-direction: column;\n      gap: 12px;\n      padding: 10px;\n    }\n\n    .card {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #161b22;\n      border-radius: 10px;\n      padding: 16px 24px;\n      box-shadow: 0 0 8px rgba(0,0,0,0.4);\n      transition: 0.3s;\n    }\n\n    .card.critical {\n      border-left: 4px solid #f85149;\n    }\n\n    .left {\n      max-width: 40%;\n    }\n\n    .left h3 {\n      font-size: 18px;\n      color: #58a6ff;\n      margin: 0 0 6px;\n    }\n\n    .desc {\n      font-size: 14px;\n      opacity: 0.8;\n    }\n\n    .status {\n      margin-top: 8px;\n      font-size: 15px;\n      font-weight: bold;\n      display: flex;\n      align-items: center;\n      gap: 6px;\n    }\n\n    .up { color: #2ea043; }\n    .down { color: #f85149; }\n\n    .emoji {\n      animation: pulse 2s infinite;\n      font-size: 18px;\n    }\n\n    .right {\n      display: flex;\n      gap: 20px;\n      align-items: center;\n    }\n\n    .metric {\n      font-size: 13px;\n    }\n\n    .bar {\n      width: 100px;\n      height: 10px;\n      border-radius: 5px;\n      background-color: #30363d;\n      overflow: hidden;\n      margin-top: 4px;\n    }\n\n    .fill {\n      height: 100%;\n      transition: width 0.4s ease;\n    }\n\n    @keyframes pulse {\n      0%, 100% { transform: scale(1); opacity: 1; }\n      50% { transform: scale(1.1); opacity: 0.85; }\n    }\n  </style>\n\n  <div class=\"card-container\">\n`;\n\nfor (let i = 0; i < id.length; i++) {\n  const temp = parseFloat(temperatura[i]);\n  const ram = parseFloat(ramUsage[i]);\n  const disk = parseFloat(diskUsage[i]);\n  const isUp = ativo[i] == 1;\n  const isCrit = critical[i] == 1;\n\n  const tempColor = temp <= 50 ? '#2ea043' : temp <= 65 ? 'orange' : '#f85149';\n  const ramColor = ram <= 40 ? '#2ea043' : ram <= 75 ? 'orange' : '#f85149';\n  const diskColor = disk <= 60 ? '#2ea043' : disk <= 85 ? 'orange' : '#f85149';\n\n  html += `\n    <div class=\"card ${isCrit ? 'critical' : ''}\">\n      <div class=\"left\">\n        <h3>${nomes[i]}</h3>\n        <div class=\"desc\">${func[i]}</div>\n        <div class=\"status ${isUp ? 'up' : 'down'}\">\n          <span class=\"emoji\">${isUp ? '✔️' : '❌'}</span>\n          ${isUp ? 'Ativo' : 'Inativo'}\n        </div>\n      </div>\n\n      <div class=\"right\">\n        <div class=\"metric\">\n          Temp: ${temp}°C\n          <div class=\"bar\"><div class=\"fill\" style=\"width:${Math.min(temp, 100)}%; background:${tempColor};\"></div></div>\n        </div>\n        <div class=\"metric\">\n          RAM: ${ram}%\n          <div class=\"bar\"><div class=\"fill\" style=\"width:${Math.min(ram, 100)}%; background:${ramColor};\"></div></div>\n        </div>\n        <div class=\"metric\">\n          Disco: ${disk}%\n          <div class=\"bar\"><div class=\"fill\" style=\"width:${Math.min(disk, 100)}%; background:${diskColor};\"></div></div>\n        </div>\n      </div>\n    </div>\n  `;\n}\n\nhtml += \"</div>\";\nhtmlNode.innerHTML = html;\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "columns": [],
+          "data": "device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp\n1,SRV-WEB-01,Servidor,yes,HTTP+Disk+CPU,950,72,162,45.4,45.9,2025-06-01\n",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "deonfk7bniby8b"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "csv",
+          "url": "http://localhost:8000/grupo_servidor.csv",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "deonfk7bniby8b"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 7,
+        "x": 14,
+        "y": 6
+      },
+      "id": 18,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "if (!data || data.series.length === 0) {\n  htmlNode.innerHTML = \"<p style='color:white;'>Sem dados.</p>\";\n  return;\n}\n\n// Contagem\nlet ativos = 0, inativos = 0, critRAM = 0, critTEMP = 0;\nconst ativo = data.series[0].fields[0].values;\nconst ramUsage = data.series[0].fields[8].values;\nconst temperatura = data.series[0].fields[9].values;\n\nfor (let i = 0; i < ativo.length; i++) {\n  if (ativo[i] == 1) ativos++;\n  else inativos++;\n\n  if (parseFloat(ramUsage[i]) > 80) critRAM++;\n  if (parseFloat(temperatura[i]) > 75) critTEMP++;\n}\n\nlet html = `\n  <style>\n    .dashboard-row {\n      display: flex;\n      gap: 24px;\n      font-family: 'Segoe UI', sans-serif;\n      color: white;\n      padding: 16px;\n    }\n\n    .card {\n      background-color: #161b22;\n      border-radius: 10px;\n      padding: 20px;\n      box-shadow: 0 0 8px rgba(0,0,0,0.4);\n    }\n\n    .chart-card {\n      width: 320px;\n    }\n\n    .chart-container {\n      width: 100%;\n      height: 220px;\n    }\n\n    .insight {\n      margin-top: 20px;\n      font-size: 14px;\n      background-color: #0d1117;\n      padding: 10px;\n      border-radius: 6px;\n    }\n\n    .insight span {\n      display: block;\n      margin-bottom: 6px;\n    }\n\n    .updated {\n      font-size: 12px;\n      opacity: 0.5;\n      text-align: right;\n      margin-top: 10px;\n    }\n  </style>\n\n  <div class=\"dashboard-row\">\n    <div class=\"card chart-card\">\n      <h3>Status Geral</h3>\n      <div class=\"chart-container\">\n        <canvas id=\"statusChart\"></canvas>\n      </div>\n      <div class=\"insight\">\n        <span>⚠️ ${critRAM} com RAM > 80%</span>\n        <span>🔥 ${critTEMP} com Temp > 75°C</span>\n      </div>\n      <div class=\"updated\">Atualizado: ${new Date().toLocaleString()}</div>\n    </div>\n  </div>\n\n  <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>\n  <script>\n    const script = document.createElement('script');\nscript.src = 'https://cdn.jsdelivr.net/npm/chart.js';\nscript.onload = () => {\n  const ctx = document.getElementById('statusChart').getContext('2d');\n  new Chart(ctx, {\n    type: 'doughnut',\n    data: {\n      labels: ['Ativos', 'Inativos'],\n      datasets: [{\n        data: [ativos, inativos],\n        backgroundColor: ['#2ea043', '#f85149'],\n        borderColor: '#0d1117',\n        borderWidth: 3\n      }]\n    },\n    options: {\n      plugins: {\n        legend: {\n          labels: { color: 'white' }\n        }\n      },\n      cutout: '70%'\n    }\n  });\n};\n\ndocument.head.appendChild(script);\n\n  </script>\n`;\n\nhtmlNode.innerHTML = html;\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "columns": [],
+          "data": "device_id,device_name,group,critical,function,pico_rede_mbps,temperatura_c,tempo_uso_horas,ram_uso_percent,disco_uso_percent,timestamp\n1,SRV-WEB-01,Servidor,yes,HTTP+Disk+CPU,950,72,162,45.4,45.9,2025-06-01\n",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "deonfk7bniby8b"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "csv",
+          "url": "http://localhost:8000/grupo_servidor.csv",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "2025-05-31T20:13:39.969Z",
+    "to": "2025-06-01T21:03:05.333Z"
+  },
+  "timepicker": {},
+  "timezone": "Africa/Luanda",
+  "title": "13",
+  "uid": "8b8effa3-84fd-4011-8c61-dbf195df557a",
+  "version": 9
+}
