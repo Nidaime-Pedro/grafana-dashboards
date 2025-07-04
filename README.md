@@ -5,6 +5,7 @@ Coleção de dashboards Grafana configurados como ficheiros JSON para provisiona
 ## 📦 Estrutura do repositório
 
 - `dashboards/` – contém todos os dashboards em formato JSON.
+- `dashboards/zabbix/` – Ficam os dashboards com o datasource zabbix.
 - `provisioning/` – configuração para provisionamento no Grafana.
 - `datasources/` – configuração e coleção dos datasources e configurações necessárias para o funcionamento.
 - `dashboards.yaml` – define onde os dashboards serão carregados.
