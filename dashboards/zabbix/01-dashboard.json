@@ -1,1 +1,906 @@
-
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Vigécimo terceiro modelo de testes",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 48,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 15,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "* {\n  font-family: Open Sans;\n}\n\n.box {\n  border: solid #555 2px;\n  border-radius: 10px;\n  padding: 10px 20px;\n}\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "let html = `\n  <style>\n    body {\n      background-color: #0d1117;\n      color: white;\n      font-family: 'Segoe UI', sans-serif;\n    }\n\n    .card-container {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 16px;\n      padding: 20px;\n    }\n\n    .card {\n      width: 540px;\n      padding: 20px;\n      border-radius: 12px;\n      background-color: #161b22;\n      box-shadow: 0 0 10px rgba(0,0,0,0.4);\n      transition: all 0.3s ease;\n      border-left: 5px solid #58a6ff;\n    }\n\n    .card h1 {\n      margin: 0 0 10px;\n      font-size: 30px;\n      color: #f2f2f2;\n    }\n\n    .card p {\n      margin: 0;\n      font-size: 16px;\n      color: #c9d1d9;\n    }\n  </style>\n\n  <div class=\"card-container\">\n    <div class=\"card\">\n      <h1>Monitoramento 📊</h1>\n      <p>Dashboard estratégico de monitoramento de servidores e disponibilidade.</p>\n    </div>\n  </div>\n`;\n\nhtmlNode.innerHTML = html;\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "#:r2b6:{\r\n  border: 1px white solid;\r\n}",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "fepn21h70h1xcb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 16,
+        "y": 0
+      },
+      "id": 24,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "if (!data || data.series.length === 0) {\n  htmlNode.innerHTML = \"<p style='color:white;'>Sem dados.</p>\";\n  return;\n}\n\nlet ativos = 0;\nlet total = data.series.length;\n\n// Iterar por cada série (host)\nfor (let i = 0; i < data.series.length; i++) {\n  const values = data.series[i].fields[1].values.toArray();\n  const last = parseFloat(values.at(-1));\n\n  if (last === 1) ativos++;\n}\n\nlet html = `\n  <style>\n    body {\n      background-color: #0d1117;\n      color: white;\n      font-family: 'Segoe UI', sans-serif;\n    }\n\n    .card-container {\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      height: 100%;\n      padding: 20px;\n    }\n\n    .card {\n      background-color: #161b22;\n      border-left: 6px solid #2ea043;\n      border-radius: 10px;\n      padding: 24px 32px;\n      box-shadow: 0 0 8px rgba(0,0,0,0.4);\n      text-align: center;\n    }\n\n    .card h2 {\n      margin: 0;\n      font-size: 22px;\n      color: #58a6ff;\n    }\n\n    .card .valor {\n      font-size: 36px;\n      font-weight: bold;\n      margin-top: 10px;\n      color: #2ea043;\n    }\n\n    .card .total {\n      font-size: 14px;\n      color: #8b949e;\n      margin-top: 4px;\n    }\n  </style>\n\n  <div class=\"card-container\">\n    <div class=\"card\">\n      <h2>Hosts Ativos</h2>\n      <div class=\"valor\">${ativos}</div>\n      <div class=\"total\">de ${total} hosts monitorados</div>\n    </div>\n  </div>\n`;\n\nhtmlNode.innerHTML = html;\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "fepn21h70h1xcb"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "/.*/"
+          },
+          "host": {
+            "filter": "/.*/"
+          },
+          "item": {
+            "filter": "Zabbix agent ping"
+          },
+          "itemTag": {
+            "filter": ""
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "fepn21h70h1xcb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 0,
+        "y": 5
+      },
+      "id": 22,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "let html = `\n  <style>\n    body { background-color: #0d1117; color: white; font-family: sans-serif; }\n    .card-container { display: flex; flex-wrap: wrap; gap: 16px; padding: 10px; }\n    .card {\n      background: #161b22; border-radius: 10px; padding: 16px; width: 240px;\n      box-shadow: 0 0 8px rgba(0,0,0,0.3);\n    }\n    .card h3 { color: #58a6ff; margin-bottom: 6px; }\n    .status { font-weight: bold; margin-top: 8px; }\n  </style>\n  <div class=\"card-container\">\n`;\n\nfor (let i = 0; i < data.series.length; i++) {\n  const name = data.series[i].name; // pode vir como \"Host: Item\"\n  const values = data.series[i].fields[1].values.toArray();\n  const last = parseFloat(values.at(-1));\n\n  // simples: detecta se é ping ou ram\n  const isPing = name.toLowerCase().includes(\"ping\");\n  const host = name.split(\":\")[0];\n  const label = name.split(\":\")[1]?.trim();\n\n  if (isPing) {\n    const status = last == 1 ? \"✔️ Ativo\" : \"❌ Inativo\";\n    const color = last == 1 ? \"#2ea043\" : \"#f85149\";\n    html += `\n      <div class=\"card\">\n        <h3>Zabbix Server</h3>\n        <div style=\"color:${color}\" class=\"status\">${status}</div>\n      </div>\n    `;\n  }\n  // você pode adicionar ram/disco usando outro bloco if com else if\n}\n\nhtml += `</div>`;\nhtmlNode.innerHTML = html;\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "fepn21h70h1xcb"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Zabbix servers"
+          },
+          "host": {
+            "filter": "Zabbix server"
+          },
+          "item": {
+            "filter": "Zabbix agent ping"
+          },
+          "itemTag": {
+            "filter": "component: system"
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "fepn21h70h1xcb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 5
+      },
+      "id": 20,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "let html = `\n  <style>\n    body { background-color: #0d1117; color: white; font-family: sans-serif; }\n    .card-container { display: flex; flex-wrap: wrap; gap: 16px; padding: 10px; }\n    .card {\n      background: #161b22; border-radius: 10px; padding: 16px; width: 240px;\n      box-shadow: 0 0 8px rgba(0,0,0,0.3);\n    }\n    .card h3 { color: #58a6ff; margin-bottom: 6px; }\n    .status { font-weight: bold; margin-top: 8px; }\n  </style>\n  <div class=\"card-container\">\n`;\n\nfor (let i = 0; i < data.series.length; i++) {\n  const name = data.series[i].name; // pode vir como \"Host: Item\"\n  const values = data.series[i].fields[1].values.toArray();\n  const last = parseFloat(values.at(-1));\n\n  // simples: detecta se é ping ou ram\n  const isPing = name.toLowerCase().includes(\"ping\");\n  const host = name.split(\":\")[0];\n  const label = name.split(\":\")[1]?.trim();\n\n  if (isPing) {\n    const status = last == 1 ? \"✔️ Ativo\" : \"❌ Inativo\";\n    const color = last == 1 ? \"#2ea043\" : \"#f85149\";\n    html += `\n      <div class=\"card\">\n        <h3>Kikelekele</h3>\n        <div style=\"color:${color}\" class=\"status\">${status}</div>\n      </div>\n    `;\n  }\n  // você pode adicionar ram/disco usando outro bloco if com else if\n}\n\nhtml += `</div>`;\nhtmlNode.innerHTML = html;\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "fepn21h70h1xcb"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Discovered hosts"
+          },
+          "host": {
+            "filter": "kikelekele"
+          },
+          "item": {
+            "filter": "Zabbix agent ping"
+          },
+          "itemTag": {
+            "filter": "component: system"
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "fepn21h70h1xcb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 0,
+        "y": 9
+      },
+      "id": 25,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "if (!data || data.series.length < 2) {\n  htmlNode.innerHTML = \"<p style='color:white;'>Sem dados.</p>\";\n  return;\n}\n\n// RAM e DISCO com base em fields[1].labels.host\nconst ramMap = {};\nconst diskMap = {};\n\nfor (let i = 0; i < data.series.length; i++) {\n  const field = data.series[i].fields[1];\n  const host = field.labels?.host || `Host ${i + 1}`;\n  const value = parseFloat(field.values.toArray().at(-1));\n\n  if (data.series[i].refId === \"A\") {\n    ramMap[host] = value;\n  } else if (data.series[i].refId === \"B\") {\n    diskMap[host] = value;\n  }\n}\n\n// Gerar HTML\nlet html = `\n  <style>\n    body {\n      background-color: #0d1117;\n      font-family: 'Segoe UI', sans-serif;\n      color: white;\n    }\n    .card-container {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 16px;\n      padding: 10px;\n    }\n    .card {\n      background-color: #161b22;\n      border-radius: 10px;\n      padding: 16px;\n      width: 240px;\n      box-shadow: 0 0 6px rgba(0,0,0,0.3);\n    }\n    .card h3 {\n      font-size: 16px;\n      margin-bottom: 8px;\n      color: #58a6ff;\n    }\n    .label {\n      font-size: 13px;\n      margin-top: 10px;\n      color: #8b949e;\n    }\n    .bar {\n      width: 100%;\n      height: 10px;\n      border-radius: 5px;\n      background-color: #30363d;\n      overflow: hidden;\n      margin-top: 4px;\n    }\n    .fill {\n      height: 100%;\n      transition: width 0.4s ease;\n    }\n  </style>\n  <div class=\"card-container\">\n`;\n\n// União dos hosts\nconst allHosts = new Set([...Object.keys(ramMap), ...Object.keys(diskMap)]);\n\nfor (const host of allHosts) {\n  const ram = ramMap[host] ?? 0;\n  const disk = diskMap[host] ?? 0;\n\n  const ramColor = ram > 75 ? \"#f85149\" : ram > 50 ? \"orange\" : \"#2ea043\";\n  const diskColor = disk > 85 ? \"#f85149\" : disk > 60 ? \"orange\" : \"#2ea043\";\n\n  html += `\n    <div class=\"card\">\n      <h3>${host}</h3>\n\n      <div class=\"label\">RAM: ${ram.toFixed(1)}%</div>\n      <div class=\"bar\"><div class=\"fill\" style=\"width:${ram}%; background:${ramColor};\"></div></div>\n\n      <div class=\"label\">Disco: ${disk.toFixed(1)}%</div>\n      <div class=\"bar\"><div class=\"fill\" style=\"width:${disk}%; background:${diskColor};\"></div></div>\n    </div>\n  `;\n}\n\nhtml += \"</div>\";\nhtmlNode.innerHTML = html;\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "fepn21h70h1xcb"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Zabbix servers"
+          },
+          "host": {
+            "filter": "/.*/"
+          },
+          "item": {
+            "filter": "Memory utilization"
+          },
+          "itemTag": {
+            "filter": "component: memory"
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "fepn21h70h1xcb"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Zabbix servers"
+          },
+          "hide": false,
+          "host": {
+            "filter": "/.*/"
+          },
+          "item": {
+            "filter": "FS [/]: Space: Used, in %"
+          },
+          "itemTag": {
+            "filter": "component: storage"
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    },
+    {
+      "datasource": {
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "fepn21h70h1xcb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 6,
+        "y": 9
+      },
+      "id": 26,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "standard",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": "\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "",
+        "onInit": "// Sets the text from customProperties\nconst htmlgraphicsText = htmlNode.getElementById('htmlgraphics-text');\n\nif (htmlgraphicsText) {\n  htmlgraphicsText.textContent = customProperties.text;\n\n  // Change the text color based on the theme\n  if (theme.isDark) {\n    htmlgraphicsText.style.color = 'green';\n  } else {\n    htmlgraphicsText.style.color = 'red';\n  }\n}\n",
+        "onInitOnResize": false,
+        "onRender": "if (!data || data.series.length < 2) {\n  htmlNode.innerHTML = \"<p style='color:white;'>Sem dados.</p>\";\n  return;\n}\n\n// RAM e DISCO com base em fields[1].labels.host\nconst ramMap = {};\nconst diskMap = {};\n\nfor (let i = 0; i < data.series.length; i++) {\n  const field = data.series[i].fields[1];\n  const host = field.labels?.host || `Host ${i + 1}`;\n  const value = parseFloat(field.values.toArray().at(-1));\n\n  if (data.series[i].refId === \"A\") {\n    ramMap[host] = value;\n  } else if (data.series[i].refId === \"B\") {\n    diskMap[host] = value;\n  }\n}\n\n// Gerar HTML\nlet html = `\n  <style>\n    body {\n      background-color: #0d1117;\n      font-family: 'Segoe UI', sans-serif;\n      color: white;\n    }\n    .card-container {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 16px;\n      padding: 10px;\n    }\n    .card {\n      background-color: #161b22;\n      border-radius: 10px;\n      padding: 16px;\n      width: 240px;\n      box-shadow: 0 0 6px rgba(0,0,0,0.3);\n    }\n    .card h3 {\n      font-size: 16px;\n      margin-bottom: 8px;\n      color: #58a6ff;\n    }\n    .label {\n      font-size: 13px;\n      margin-top: 10px;\n      color: #8b949e;\n    }\n    .bar {\n      width: 100%;\n      height: 10px;\n      border-radius: 5px;\n      background-color: #30363d;\n      overflow: hidden;\n      margin-top: 4px;\n    }\n    .fill {\n      height: 100%;\n      transition: width 0.4s ease;\n    }\n  </style>\n  <div class=\"card-container\">\n`;\n\n// União dos hosts\nconst allHosts = new Set([...Object.keys(ramMap), ...Object.keys(diskMap)]);\n\nfor (const host of allHosts) {\n  const ram = ramMap[host] ?? 0;\n  const disk = diskMap[host] ?? 0;\n\n  const ramColor = ram > 75 ? \"#f85149\" : ram > 50 ? \"orange\" : \"#2ea043\";\n  const diskColor = disk > 85 ? \"#f85149\" : disk > 60 ? \"orange\" : \"#2ea043\";\n\n  html += `\n    <div class=\"card\">\n      <h3>${host}</h3>\n\n      <div class=\"label\">RAM: ${ram.toFixed(1)}%</div>\n      <div class=\"bar\"><div class=\"fill\" style=\"width:${ram}%; background:${ramColor};\"></div></div>\n\n      <div class=\"label\">Disco: ${disk.toFixed(1)}%</div>\n      <div class=\"bar\"><div class=\"fill\" style=\"width:${disk}%; background:${diskColor};\"></div></div>\n    </div>\n  `;\n}\n\nhtml += \"</div>\";\nhtmlNode.innerHTML = html;\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull",
+            "last",
+            "firstNotNull",
+            "first",
+            "min",
+            "max",
+            "mean",
+            "sum",
+            "count",
+            "range",
+            "delta",
+            "step",
+            "diff",
+            "logmin",
+            "allIsZero",
+            "allIsNull",
+            "diffperc"
+          ]
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "fepn21h70h1xcb"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Discovered hosts"
+          },
+          "host": {
+            "filter": "/.*/"
+          },
+          "item": {
+            "filter": "Memory utilization"
+          },
+          "itemTag": {
+            "filter": "component: memory"
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        },
+        {
+          "application": {
+            "filter": ""
+          },
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "fepn21h70h1xcb"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Discovered hosts"
+          },
+          "hide": false,
+          "host": {
+            "filter": "/.*/"
+          },
+          "item": {
+            "filter": "FS [(C:)]: Space: Used, in %"
+          },
+          "itemTag": {
+            "filter": "component: storage"
+          },
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "count": false,
+            "disableDataAlignment": false,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "0",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "schema": 12,
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "gapit-htmlgraphics-panel"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-2d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "Africa/Luanda",
+  "title": "20",
+  "uid": "3g8effa3-84fd-4011-8c61-dbf195df557a",
+  "version": 42
+}
