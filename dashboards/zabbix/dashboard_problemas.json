@@ -1,0 +1,1880 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 40,
+  "links": [],
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 2,
+        "x": 0,
+        "y": 0
+      },
+      "id": 11,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<P>\r\n<P>\r\n<center><img style=\" width=\"80\" height=\"80\" \" src=\"https://loja.learnit.ao/wp-content/uploads/2024/10/Learnit.png\" ></center>\r\n<p>\r\n<center><h5> LEARNIT</h5></center>",
+        "mode": "html"
+      },
+      "pluginVersion": "12.0.1",
+      "title": "",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#18494e",
+            "mode": "fixed"
+          },
+          "displayName": "CONSOLIDADO GERAL P/ STATUS (INCIDENTES)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 12,
+        "x": 2,
+        "y": 0
+      },
+      "id": 19,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(i.itemid) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#18494e",
+            "mode": "fixed"
+          },
+          "displayName": "CONSOLIDADO P/ GRUPO (INCIDENTES ATIVOS)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 10,
+        "x": 14,
+        "y": 0
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(i.itemid) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#18494e",
+            "mode": "fixed"
+          },
+          "displayName": "Total Incidentes (24h)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 2,
+        "y": 1
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(i.itemid) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND i.status = 0 AND h.status = 0\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-red",
+            "mode": "fixed"
+          },
+          "displayName": "Total Ativos (Agora)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 6,
+        "y": 1
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(i.itemid) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE t.value = 1 AND t.status = 0 AND p.r_clock = 0 AND i.status = 0 AND h.status = 0\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-green",
+            "mode": "fixed"
+          },
+          "displayName": "Total Resolvidos (24h)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 10,
+        "y": 1
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(i.itemid) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE t.value = 0 AND t.status = 0 AND p.r_clock > 0 AND FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND i.status = 0 AND h.status = 0\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green"
+              },
+              {
+                "color": "dark-yellow",
+                "value": 1
+              },
+              {
+                "color": "dark-orange",
+                "value": 5
+              },
+              {
+                "color": "dark-red",
+                "value": 10
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 10,
+        "x": 14,
+        "y": 1
+      },
+      "id": 17,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT g.name AS group_name, COALESCE(COUNT(p.objectid), 0) AS problem_count\r\nFROM hstgrp g\r\nLEFT JOIN hosts_groups hg ON (g.groupid = hg.groupid)\r\nLEFT JOIN hosts h ON (hg.hostid = h.hostid)\r\nLEFT JOIN items i ON (h.hostid = i.hostid)\r\nLEFT JOIN (\r\n    SELECT itemid, triggerid, MAX(functionid) AS max_functionid\r\n    FROM functions\r\n    GROUP BY itemid, triggerid\r\n) f ON (i.itemid = f.itemid)\r\nLEFT JOIN triggers t ON (f.triggerid = t.triggerid)\r\nLEFT JOIN problem p ON (t.triggerid = p.objectid AND p.r_clock = 0)\r\nWHERE ((t.value = 1 AND t.status = 0) OR p.objectid IS NULL)\r\nAND g.name in ('Switch','Sites','Zabbix servers','Router','Mikrotik','OLT','Linux','Windows Server') AND i.status = 0 AND h.status = 0\r\nGROUP BY g.name;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "transformations": [
+        {
+          "id": "rowsToFields",
+          "options": {}
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severidade"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Average": {
+                        "color": "dark-yellow",
+                        "index": 3,
+                        "text": "Média"
+                      },
+                      "Disaster": {
+                        "color": "dark-red",
+                        "index": 5,
+                        "text": "Desastre"
+                      },
+                      "High": {
+                        "color": "semi-dark-red",
+                        "index": 4,
+                        "text": "Alta"
+                      },
+                      "Information": {
+                        "color": "dark-blue",
+                        "index": 1,
+                        "text": "Informação"
+                      },
+                      "Not classified": {
+                        "color": "#808080",
+                        "index": 0,
+                        "text": "Desclassificado"
+                      },
+                      "Warning": {
+                        "color": "dark-orange",
+                        "index": 2,
+                        "text": "Advertência"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Problema": {
+                        "color": "dark-red",
+                        "index": 0,
+                        "text": "Problema"
+                      },
+                      "Resolvido": {
+                        "color": "dark-green",
+                        "index": 1,
+                        "text": "Resolvido"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Problema"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 459
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Item"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 278
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Host"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 270
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Horario"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 186
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT * FROM (\r\n    SELECT\r\n        DATE_FORMAT(FROM_UNIXTIME(p.clock), '%Y-%m-%d %H:%i:%s') as Horario,\r\n                CASE\r\n            WHEN p.severity = 0 THEN 'Not classified'\r\n            WHEN p.severity = 1 THEN 'Information'\r\n            WHEN p.severity = 2 THEN 'Warning'\r\n            WHEN p.severity = 3 THEN 'Average'\r\n            WHEN p.severity = 4 THEN 'High'\r\n            WHEN p.severity = 5 THEN 'Disaster'\r\n            ELSE 'Unknown'\r\n        END AS Severidade,\r\n        CASE\r\n\t\t\tWHEN p.r_clock = 0 THEN \"00:00:00\"\r\n            ELSE SEC_TO_TIME(TIMESTAMPDIFF(SECOND, FROM_UNIXTIME(p.clock), FROM_UNIXTIME(p.r_clock)))\r\n\t\tEND AS \"Tempo decorrido\",\r\n\t\tCASE\r\n\t\t\tWHEN p.r_clock > 0 THEN \"Resolvido\"\r\n            WHEN p.r_clock = 0 THEN \"Problema\"\r\n\t\tEND AS Status,\r\n        h.host as Host,\r\n        CONCAT(it.ip, it.dns) AS IP,\r\n        i.name Item,\r\n        p.name as Problema,\r\n        CONCAT(\r\n            FLOOR(TIMESTAMPDIFF(DAY, FROM_UNIXTIME(p.clock), NOW())),\r\n            'd ',\r\n            MOD(TIMESTAMPDIFF(HOUR, FROM_UNIXTIME(p.clock), NOW()), 24),\r\n            'h ',\r\n            MOD(TIMESTAMPDIFF(MINUTE, FROM_UNIXTIME(p.clock), NOW()), 60),\r\n            'm '\r\n        ) AS Duracao,\r\n\t\tCONCAT(\r\n\t\t\tIFNULL(CAST(huint_last.value AS CHAR), ''),\r\n\t\t\tIFNULL(CAST(h_last.value AS CHAR), '')\r\n        ) AS \"Last\",\r\n        CONCAT(\r\n            IFNULL(CAST(tr_uint.value_min AS CHAR), ''),\r\n            IFNULL(CAST(tr_avg.value_min AS CHAR), '')\r\n        ) AS \"Min\",\r\n\t\tCONCAT(\r\n            IFNULL(CAST(tr_uint.value_avg AS CHAR), ''),\r\n            IFNULL(CAST(tr_avg.value_avg AS CHAR), '')\r\n        ) AS \"Avg\",\r\n\t\tCONCAT(\r\n            IFNULL(CAST(tr_uint.value_max AS CHAR), ''),\r\n            IFNULL(CAST(tr_avg.value_max AS CHAR), '')\r\n        ) AS \"Max\"\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    LEFT JOIN history_uint huint_last ON (i.itemid = huint_last.itemid AND huint_last.clock = (SELECT MAX(clock) FROM history_uint WHERE itemid = i.itemid))\r\n    LEFT JOIN history h_last ON (i.itemid = h_last.itemid AND h_last.clock = (SELECT MAX(clock) FROM history WHERE itemid = i.itemid))\r\n    LEFT JOIN trends_uint tr_uint ON (i.itemid = tr_uint.itemid AND tr_uint.clock = (SELECT MAX(clock) FROM trends_uint WHERE itemid = i.itemid))\r\n    LEFT JOIN trends tr_avg ON (i.itemid = tr_avg.itemid AND tr_avg.clock = (SELECT MAX(clock) FROM trends WHERE itemid = i.itemid))\r\n    WHERE t.value = 1 AND t.status = 0 AND p.r_clock = 0 AND i.status = 0 AND h.status = 0\r\n) AS Subquery\r\nORDER BY Horario DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Tabela de Problemas Ativos (Agora)",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Avg": true,
+              "Duracao": false,
+              "Max": true,
+              "Min": true,
+              "Tempo decorrido": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "dark-yellow",
+                "value": 5
+              },
+              {
+                "color": "dark-orange",
+                "value": 10
+              },
+              {
+                "color": "dark-red",
+                "value": 15
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "gauge"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 8,
+        "x": 0,
+        "y": 17
+      },
+      "id": 5,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT h.name AS Host,i.name AS Item, count(i.itemid) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND i.status = 0 AND h.status = 0\r\ngroup by i.name,h.hostid\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Tabela de Problemas p/ Host e Item (24h)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Information"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Average"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Warning"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 8,
+        "x": 8,
+        "y": 17
+      },
+      "id": 16,
+      "options": {
+        "displayLabels": [
+          "value"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true,
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^Total$/",
+          "values": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT CASE\r\n            WHEN p.severity = 0 THEN 'Not classified'\r\n            WHEN p.severity = 1 THEN 'Information'\r\n            WHEN p.severity = 2 THEN 'Warning'\r\n            WHEN p.severity = 3 THEN 'Average'\r\n            WHEN p.severity = 4 THEN 'High'\r\n            WHEN p.severity = 5 THEN 'Disaster'\r\n            ELSE 'Unknown'\r\n        END AS Severidade, count(p.severity) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND i.status = 0 AND h.status = 0\r\ngroup by p.severity\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Incidentes por Severidade (24h)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "dark-yellow",
+                "value": 5
+              },
+              {
+                "color": "dark-orange",
+                "value": 10
+              },
+              {
+                "color": "dark-red",
+                "value": 15
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "gauge"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 8,
+        "x": 16,
+        "y": 17
+      },
+      "id": 3,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT h.name AS Host, count(h.hostid) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND i.status = 0 AND h.status = 0\r\ngroup by h.name\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Tabela de Problemas Agregado /p Host (24h)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severidade"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Average": {
+                        "color": "dark-yellow",
+                        "index": 3,
+                        "text": "Média"
+                      },
+                      "Disaster": {
+                        "color": "dark-red",
+                        "index": 5,
+                        "text": "Desastre"
+                      },
+                      "High": {
+                        "color": "semi-dark-red",
+                        "index": 4,
+                        "text": "Alta"
+                      },
+                      "Information": {
+                        "color": "dark-blue",
+                        "index": 1,
+                        "text": "Informação"
+                      },
+                      "Not classified": {
+                        "color": "#808080",
+                        "index": 0,
+                        "text": "Desclassificado"
+                      },
+                      "Warning": {
+                        "color": "dark-orange",
+                        "index": 2,
+                        "text": "Advertência"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Problema": {
+                        "color": "dark-red",
+                        "index": 0,
+                        "text": "Problema"
+                      },
+                      "Resolvido": {
+                        "color": "dark-green",
+                        "index": 1,
+                        "text": "Resolvido"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      },
+      "id": 2,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT * FROM (\r\n    SELECT\r\n        DATE_FORMAT(FROM_UNIXTIME(p.clock), '%Y-%m-%d %H:%i:%s') as Horario,\r\n                CASE\r\n            WHEN p.severity = 0 THEN 'Not classified'\r\n            WHEN p.severity = 1 THEN 'Information'\r\n            WHEN p.severity = 2 THEN 'Warning'\r\n            WHEN p.severity = 3 THEN 'Average'\r\n            WHEN p.severity = 4 THEN 'High'\r\n            WHEN p.severity = 5 THEN 'Disaster'\r\n            ELSE 'Unknown'\r\n        END AS Severidade,\r\n        CASE\r\n\t\t\tWHEN p.r_clock = 0 THEN \"00:00:00\"\r\n            ELSE SEC_TO_TIME(TIMESTAMPDIFF(SECOND, FROM_UNIXTIME(p.clock), FROM_UNIXTIME(p.r_clock)))\r\n\t\tEND AS \"Tempo decorrido\",\r\n\t\tCASE\r\n\t\t\tWHEN p.r_clock > 0 THEN \"Resolvido\"\r\n            WHEN p.r_clock = 0 THEN \"Problema\"\r\n\t\tEND AS Status,\r\n        h.host as Host,\r\n        CONCAT(it.ip, it.dns) AS IP,\r\n        i.name Item,\r\n        p.name as Problema,\r\n        CASE\r\n        WHEN p.r_clock = 0 THEN \"0d 0h 0m\"\r\n        ELSE\r\n        CONCAT(\r\n            FLOOR(TIMESTAMPDIFF(DAY, FROM_UNIXTIME(p.clock), FROM_UNIXTIME(p.r_clock))),\r\n            'd ',\r\n            MOD(TIMESTAMPDIFF(HOUR, FROM_UNIXTIME(p.clock), FROM_UNIXTIME(p.r_clock)), 24),\r\n            'h ',\r\n            MOD(TIMESTAMPDIFF(MINUTE, FROM_UNIXTIME(p.clock), FROM_UNIXTIME(p.r_clock)), 60),\r\n            'm '\r\n        ) \r\n        END AS Duracao,\r\n\t\tCONCAT(\r\n\t\t\tIFNULL(CAST(huint_last.value AS CHAR), ''),\r\n\t\t\tIFNULL(CAST(h_last.value AS CHAR), '')\r\n        ) AS \"Last\",\r\n        CONCAT(\r\n            IFNULL(CAST(tr_uint.value_min AS CHAR), ''),\r\n            IFNULL(CAST(tr_avg.value_min AS CHAR), '')\r\n        ) AS \"Min\",\r\n\t\tCONCAT(\r\n            IFNULL(CAST(tr_uint.value_avg AS CHAR), ''),\r\n            IFNULL(CAST(tr_avg.value_avg AS CHAR), '')\r\n        ) AS \"Avg\",\r\n\t\tCONCAT(\r\n            IFNULL(CAST(tr_uint.value_max AS CHAR), ''),\r\n            IFNULL(CAST(tr_avg.value_max AS CHAR), '')\r\n        ) AS \"Max\"\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    LEFT JOIN history_uint huint_last ON (i.itemid = huint_last.itemid AND huint_last.clock = (SELECT MAX(clock) FROM history_uint WHERE itemid = i.itemid))\r\n    LEFT JOIN history h_last ON (i.itemid = h_last.itemid AND h_last.clock = (SELECT MAX(clock) FROM history WHERE itemid = i.itemid))\r\n    LEFT JOIN trends_uint tr_uint ON (i.itemid = tr_uint.itemid AND tr_uint.clock = (SELECT MAX(clock) FROM trends_uint WHERE itemid = i.itemid))\r\n    LEFT JOIN trends tr_avg ON (i.itemid = tr_avg.itemid AND tr_avg.clock = (SELECT MAX(clock) FROM trends WHERE itemid = i.itemid))\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND i.status = 0 AND h.status = 0\r\n) AS Subquery\r\nORDER BY Horario DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Tabela de Problemas (24h)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#18494e",
+            "mode": "fixed"
+          },
+          "displayName": "CONSOLIDADO GERAL P/ SEVERIDADE (24H)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 43
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(i.itemid) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
+          },
+          "displayName": "Informação (24h)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 0,
+        "y": 45
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.severity) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND p.severity = 1 AND i.status = 0 AND h.status = 0\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-orange",
+            "mode": "fixed"
+          },
+          "displayName": "Advertência (24h)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 2,
+        "y": 45
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.severity) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND p.severity = 2 AND i.status = 0 AND h.status = 0\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-yellow",
+            "mode": "fixed"
+          },
+          "displayName": "Média (24h)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 6,
+        "y": 45
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.severity) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND p.severity = 3 AND i.status = 0 AND h.status = 0\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-red",
+            "mode": "fixed"
+          },
+          "displayName": "Alta (24h)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 11,
+        "y": 45
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.severity) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND p.severity = 4 AND i.status = 0 AND h.status = 0\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "aeoj03rro4a2ob"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-red",
+            "mode": "fixed"
+          },
+          "displayName": "Desastre (24h)",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 7,
+        "x": 17,
+        "y": 45
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "aeoj03rro4a2ob"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.severity) AS Total\r\n    FROM problem p\r\n    INNER JOIN (\r\n        SELECT max(itemid) AS itemid, max(triggerid) AS triggerid\r\n        FROM functions\r\n        GROUP BY triggerid\r\n    ) f ON p.objectid = f.triggerid\r\n    INNER JOIN items i ON (f.itemid = i.itemid)\r\n    INNER JOIN hosts h ON (i.hostid = h.hostid)\r\n    LEFT JOIN interface it ON (it.interfaceid = i.interfaceid)\r\n    INNER JOIN triggers t ON (f.triggerid = t.triggerid)\r\n    WHERE FROM_UNIXTIME(p.clock) >= NOW() - INTERVAL 24 HOUR AND p.severity = 5 AND i.status = 0 AND h.status = 0\r\norder by Total DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    }
+  ],
+  "preload": false,
+  "refresh": "1m",
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Dashboard Incidentes",
+  "uid": "d9ddd01b-a5c8-4848-9106-dcbbf87b71e1",
+  "version": 5
+}
