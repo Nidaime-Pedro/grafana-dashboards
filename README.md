@@ -1,6 +1,3 @@
-weather API key= 5931757c660043ef93a215425250302
-‎http://api.weatherapi.com/v1/current.json?key=5931757c660043ef93a215425250302
-
 # Grafana Dashboards
 
 Coleção de dashboards Grafana configurados como ficheiros JSON para provisionamento via Git.
